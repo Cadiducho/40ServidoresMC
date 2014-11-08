@@ -1,0 +1,14 @@
+name: 40ServidoresMC
+main: com.cadiducho.cservidoresMC.Main
+version: 1.0.3
+author: Cadiducho
+description: Enlace para servidores de la web 40ServidoresMC!
+commands:
+    vote40:
+        description: Comando principal de 40ServidoresMC
+        aliases: [votar40, voto40, mivoto40]
+    update40:
+        description: Comando para verificar version
+        aliases: [actualizar40, upd40]
+
+  
