@@ -24,7 +24,7 @@ public class Metodos {
     public Metodos(Main instance) {
         plugin = instance;
     }
-    ##public int getVoto(Player p, String clave); //Censurado a petición de la web oficial
+    ##public int getVoto(Player p, String clave) //Censurado
 	
     public static ItemStack setItemStack(String string) {
 	ItemStack is;

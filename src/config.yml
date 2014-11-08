@@ -4,6 +4,7 @@ broadcast:
     activado: true
     mensajeBroadcast: '&aGracias a {0} por votarnos! El ya ha obtenido su premio, usa &2/voto40&a y obten el tuyo'
 mensaje: '&6Gracias por votarnos! Aqui tienes tu premio: '
+comandoCustom: money add {0} 10
 premio:
   - 267,1
   - 261,1

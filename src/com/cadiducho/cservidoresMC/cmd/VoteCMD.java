@@ -38,12 +38,13 @@ public class VoteCMD implements CommandExecutor {
                         }
                         String msg1 = plugin.getTag()+plugin.getConfig().getString("mensaje");
                         sender.sendMessage(plugin.getMetodos().colorizar(msg1));
+                        plugin.getInv().darPremio(player);
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), plugin.getConfig().getString("comandoCustom"));
                         //Ha votado
                         break;
                     case 1:
                         String msg2 = plugin.getTag()+"&aGracias por votar, pero ya has obtenido tu premio!";
                         sender.sendMessage(plugin.getMetodos().colorizar(msg2));
-                        plugin.getInv().darPremio(player); //ToDO PREMIOS KIT
                         break;
                     default:
                         String msg3 = plugin.getTag()+"&7Ha ocurrido un error. Prueba más tarde o avisa a un adminsitrador";
