@@ -20,10 +20,14 @@ public class UpdateCMD implements CommandExecutor {
     
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!sender.hasPermission("40servidores.actualizar")) { return true;}
-        String act = plugin.getUpdater().checkearVersion();
-        if (act != null) {
-            sender.sendMessage(plugin.getMetodos().colorizar(plugin.getTag()+"&a"+act));
+        if (sender.hasPermission("40servidores.actualizar")) { 
+            String act = plugin.getUpdater().checkearVersion();
+            if (act != null) {
+                sender.sendMessage(plugin.getMetodos().colorizar(plugin.getTag()+"&a"+act));
+            }
+        } else {
+            String msg4 = plugin.getTag()+"&cNo tienes permiso para ejecutar este comando.";
+            sender.sendMessage(plugin.getMetodos().colorizar(msg4));
         }
         return true;
     }

@@ -58,6 +58,9 @@ public class VoteCMD implements CommandExecutor {
                 String msg = plugin.getTag()+"&cNo puedes usar este comando si no eres un jugador";
                 sender.sendMessage(plugin.getMetodos().colorizar(msg)); 
             }
+        } else {
+            String msg4 = plugin.getTag()+"&cNo tienes permiso para ejecutar este comando.";
+            sender.sendMessage(plugin.getMetodos().colorizar(msg4));
         }
         return true;
     }
