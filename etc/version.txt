@@ -1,3 +1,3 @@
-1.7.2:1.0.5:Solucionados error de permisos
-1.7.10:1.0.5:Solucionados error de permisos
-1.8:1.0.5:Solucionados error de permisos
+1.7.2:1.0.6:Corregida la eliminación de inventario al recibir el premio
+1.7.10:1.0.6:Corregida la eliminación de inventario al recibir el premio
+1.8:1.0.6:Corregida la eliminación de inventario al recibir el premio

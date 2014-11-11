@@ -1,6 +1,6 @@
 name: 40ServidoresMC
 main: com.cadiducho.cservidoresMC.Main
-version: 1.0.5
+version: 1.0.6
 author: Cadiducho
 description: Enlace para servidores de la web 40ServidoresMC!
 commands:

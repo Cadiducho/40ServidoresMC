@@ -15,23 +15,33 @@ import org.bukkit.inventory.ItemStack;
 public class Inventario {
     
     public static Main plugin;
-    public Inventory[] premioInv = new Inventory[9999999];
+    public Inventory[] invOriginal = new Inventory[9999999];
+    public Inventory[] invPremio = new Inventory[9999999];
+    public Inventory[] invFinal = new Inventory[9999999];
     
     public Inventario(Main instance) {
         plugin = instance;
     }
     
     public Inventory getKit(Player player) {
-        premioInv[player.getEntityId()] = Bukkit.createInventory(player, 36);
+        invOriginal[player.getEntityId()] = Bukkit.createInventory(player, 36);
+        invPremio[player.getEntityId()] = Bukkit.createInventory(player, 36);
+        invFinal[player.getEntityId()] = Bukkit.createInventory(player, 36);
+        
+        invOriginal[player.getEntityId()].setContents(player.getInventory().getContents());
+        invFinal = invOriginal;
+        
+        
+        
         
         @SuppressWarnings("unchecked")
 	List<String> kitlist = (List<String>) plugin.getConfig().getList("premio");
 	Iterator<String> iterator = kitlist.iterator();
 	while (iterator.hasNext()) {
             ItemStack is = Metodos.setItemStack(iterator.next());
-            premioInv[player.getEntityId()].addItem(is);
+            invFinal[player.getEntityId()].addItem(is);
         }	
-	return premioInv[player.getEntityId()];   
+	return invFinal[player.getEntityId()];   
     }
 
     public void darPremio(Player player) {
