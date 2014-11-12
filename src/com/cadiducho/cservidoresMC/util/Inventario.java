@@ -30,12 +30,9 @@ public class Inventario {
         
         invOriginal[player.getEntityId()].setContents(player.getInventory().getContents());
         invFinal = invOriginal;
-        
-        
-        
-        
+            
         @SuppressWarnings("unchecked")
-	List<String> kitlist = (List<String>) plugin.getConfig().getList("premio");
+	List<String> kitlist = plugin.listaItems;
 	Iterator<String> iterator = kitlist.iterator();
 	while (iterator.hasNext()) {
             ItemStack is = Metodos.setItemStack(iterator.next());

@@ -38,9 +38,15 @@ public class VoteCMD implements CommandExecutor {
                         }
                         String msg1 = plugin.getTag()+plugin.getConfig().getString("mensaje");
                         sender.sendMessage(plugin.getMetodos().colorizar(msg1));
-                        plugin.getInv().darPremio(player);
-                        String comando = plugin.getConfig().getString("comandoCustom").replace("{0}", player.getName());
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), comando);
+                        if (plugin.premioFisico) {
+                            plugin.getInv().darPremio(player);
+                        }
+                        if (plugin.comandosCustom) {
+                            for (String cmds : plugin.listaComandos) {
+                                String comando = cmds.replace("{0}", player.getName());
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), comando);
+                            }
+                        }
                         //Ha votado
                         break;
                     case 1:
