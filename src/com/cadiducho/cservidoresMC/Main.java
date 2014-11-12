@@ -39,7 +39,7 @@ public class Main extends JavaPlugin {
         debugLog("Modo Debug activado en el plugin");
         /*
          * Generar y cargar Config.yml
-         */     
+         */
         debugLog("Cargando configuración...");
         cargarConfig();
         /*

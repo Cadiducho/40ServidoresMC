@@ -42,7 +42,7 @@ public class Version {
                         if (versionInstalada.matches(tokens[1])) {
                             a = "Version actualizada";
                         } else {
-                            a = "Version desactualizada. Nueva version recomendada: {0} Changelog: {1}".replace("{0}", versionRecomendada).replace("{1}", tokens[2]);
+                            a = "Version desactualizada. Nueva version: [{2}]{0} Changelog: {1}".replace("{0}", versionRecomendada).replace("{1}", tokens[2]).replace("{2}", tokens[3]);
                         }
                     } 
                 }
