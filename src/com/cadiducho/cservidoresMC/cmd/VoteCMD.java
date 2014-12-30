@@ -1,6 +1,7 @@
 package com.cadiducho.cservidoresMC.cmd;
 
 import com.cadiducho.cservidoresMC.Main;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -40,6 +41,8 @@ public class VoteCMD implements CommandExecutor {
                         sender.sendMessage(plugin.getMetodos().colorizar(msg1));
                         if (plugin.premioFisico) {
                             plugin.getInv().darPremio(player);
+                            System.out.println("["+ plugin.getName() + player + "Ha obtenido un premio por votar");
+
                         }
                         if (plugin.comandosCustom) {
                             for (String cmds : plugin.listaComandos) {
