@@ -1,13 +1,16 @@
 package com.cadiducho.cservidoresMC;
 
+import com.cadiducho.cservidoresMC.cmd.ReloadCMD;
 import com.cadiducho.cservidoresMC.cmd.UpdateCMD;
 import com.cadiducho.cservidoresMC.cmd.VoteCMD;
 import com.cadiducho.cservidoresMC.util.Inventario;
 import com.cadiducho.cservidoresMC.util.Metodos;
 import com.cadiducho.cservidoresMC.util.Version;
+
 import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
+
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +28,7 @@ public class Main extends JavaPlugin {
     
     private final VoteCMD voteCMD = new VoteCMD(this);
     private final UpdateCMD updateCMD = new UpdateCMD(this);
+    private final ReloadCMD reloadCMD = new ReloadCMD(this);
     
     private final String tag = "&8[&b40ServidoresMC&8]";
     public int configVer = 0;
@@ -34,7 +38,8 @@ public class Main extends JavaPlugin {
     public List<String> listaComandos;
     public List<String> listaItems;
     
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     public void onEnable() {
         debugLog("Modo Debug activado en el plugin");
         /*
@@ -50,6 +55,7 @@ public class Main extends JavaPlugin {
         
         this.getCommand("vote40").setExecutor(voteCMD);
         this.getCommand("update40").setExecutor(updateCMD);
+        this.getCommand("reload40").setExecutor(reloadCMD);
         
         /*
          * Finalizar...
