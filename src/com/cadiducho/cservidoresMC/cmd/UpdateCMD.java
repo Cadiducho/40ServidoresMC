@@ -1,6 +1,7 @@
 package com.cadiducho.cservidoresMC.cmd;
 
 import com.cadiducho.cservidoresMC.Main;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,9 @@ public class UpdateCMD implements CommandExecutor {
             String act = plugin.getUpdater().checkearVersion();
             if (act != null) {
                 sender.sendMessage(plugin.getMetodos().colorizar(plugin.getTag()+"&a"+act));
+                
+                System.out.println("["+ plugin.getName() +"] Version: " + act);
+
             }
         } else {
             String msg4 = plugin.getTag()+"&cNo tienes permiso para ejecutar este comando.";
