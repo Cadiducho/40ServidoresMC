@@ -4,3 +4,4 @@
 1.7.9:1.1.0:Versión estable:Recomendada
 1.7.10:1.1.0:Versión estable:Recomendada
 1.8:1.1.0:Versión estable:Recomendada
+1.8.X:1.1.1:Versión estable:Recomendada
