@@ -37,8 +37,7 @@ public class ReloadCMD implements CommandExecutor {
           sender.sendMessage(plugin.getMetodos().colorizar(msg5));
           
           System.out.println("["+ plugin.getName() +"] Configuracion recargada");
-        }
-         else {
+        } else {
             String msg5 = plugin.getTag()+"&cNo tienes permiso para ejecutar este comando.";
             sender.sendMessage(plugin.getMetodos().colorizar(msg5));
         }

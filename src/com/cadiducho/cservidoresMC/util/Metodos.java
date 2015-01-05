@@ -26,41 +26,33 @@ public class Metodos {
     public Metodos(Main instance) {
         plugin = instance;
     }
-    @SuppressWarnings("resource")
-	public int getVoto(Player p, String clave) {
-    	try
-        {
-          String web = "http://www.40servidoresmc.es/api.php?nombre=" + p.getName() + "&clave=" + clave;
-          URL url = new URL(web);
-          InputStream in = url.openStream();
-          Scanner scan = new Scanner(in);
-          if (scan.hasNext())
-          {
-            String n = scan.next();
-            plugin.debugLog("Voto de " + p.getName() + " obtenido correctamente");
-            return Integer.parseInt(n);
-          }
-          plugin.debugLog("Ha ocurrido un error desconocido obteniendo el voto de " + p.getName());
-          return -1;
-        }
-        catch (MalformedURLException ex)
-        {
-          Logger.getLogger(Metodos.class.getName()).log(Level.SEVERE, null, ex);
-          plugin.log("Ha ocurrido un error al obtener la URL de los votos");
-          plugin.debugLog("Causa: MalformedURLException");
-          return -1;
-        }
-        catch (IOException iex)
-        {
-          Logger.getLogger(Metodos.class.getName()).log(Level.SEVERE, null, iex);
-          plugin.log("Ha ocurrido un error obteniendo la URL de los votos (IO)");
-          plugin.debugLog("Causa: " + iex.getMessage());
+    
+    public int getVoto(Player p, String clave) {
+        try {
+            String web = "http://www.40servidoresmc.es/api.php?nombre=" + p.getName() + "&clave=" + clave;
+            URL url = new URL(web);
+            InputStream in = url.openStream();
+            Scanner scan = new Scanner(in);
+            if (scan.hasNext()) {
+                String n = scan.next();
+                plugin.debugLog("Voto de " + p.getName() + " obtenido correctamente");
+                return Integer.parseInt(n);
+            }
+            plugin.debugLog("Ha ocurrido un error desconocido obteniendo el voto de " + p.getName());
+            return -1;
+        } catch (MalformedURLException ex) {
+            plugin.log("Ha ocurrido un error al obtener la URL de los votos");
+            plugin.debugLog("Causa: MalformedURLException");
+            return -1;
+        } catch (IOException iex) {
+            plugin.log("Ha ocurrido un error obteniendo la URL de los votos (IOExeception)");
+            plugin.debugLog("Causa: " + iex.getMessage());
         }
         return -1;
     }
 	
     @SuppressWarnings("deprecation")
-	public static ItemStack setItemStack(String string) {
+    public static ItemStack setItemStack(String string) {
 	ItemStack is;
 	try {
             String values[] = string.split(",");

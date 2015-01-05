@@ -38,8 +38,7 @@ public class Main extends JavaPlugin {
     public List<String> listaComandos;
     public List<String> listaItems;
     
-    @SuppressWarnings("unused")
-	@Override
+    @Override
     public void onEnable() {
         debugLog("Modo Debug activado en el plugin");
         /*
