@@ -26,13 +26,8 @@ public class ReloadCMD implements CommandExecutor {
          plugin.reloadConfig();
         	
           String msg5 = plugin.getTag()
-            +"&aConfiguracion del plugin:\n &r"
-             +  plugin.getName()
-              + "\n &aVersion &r"
-        	   +  plugin.getVersion()
-        	    + "\n &aCreado por &r" 
-                 + "Cadiducho" 
-        	      + "\n&aRecargada correctamente";
+            +"&aConfiguración recargada correctamente\n&"
+            +plugin.getTag()+"aFuncionando versión" + plugin.getVersion();
           
           sender.sendMessage(plugin.getMetodos().colorizar(msg5));
           
