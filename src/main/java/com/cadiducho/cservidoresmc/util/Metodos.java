@@ -1,6 +1,6 @@
 package com.cadiducho.cservidoresMC.util;
 
-import com.cadiducho.cservidoresMC.Main;
+import com.cadiducho.cservidoresmc.impl.IBukkit;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,9 +21,9 @@ import org.bukkit.inventory.ItemStack;
  */
 public class Metodos {
     
-    public static Main plugin;
+    public static IBukkit plugin;
     
-    public Metodos(Main instance) {
+    public Metodos(IBukkit instance) {
         plugin = instance;
     }
     

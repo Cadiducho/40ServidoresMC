@@ -1,4 +1,9 @@
+#Antiguo stuff de NB
 /nbproject/private/
 nbproject/
 /build/
 /dist/
+
+#Maven
+/target/
+target/

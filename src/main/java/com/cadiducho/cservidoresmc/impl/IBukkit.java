@@ -1,11 +1,12 @@
-package com.cadiducho.cservidoresMC;
+package com.cadiducho.cservidoresmc.impl;
 
 import com.cadiducho.cservidoresMC.cmd.ReloadCMD;
 import com.cadiducho.cservidoresMC.cmd.UpdateCMD;
 import com.cadiducho.cservidoresMC.cmd.VoteCMD;
 import com.cadiducho.cservidoresMC.util.Inventario;
 import com.cadiducho.cservidoresMC.util.Metodos;
-import com.cadiducho.cservidoresMC.util.Version;
+import com.cadiducho.cservidoresMC.util.Updater;
+import com.cadiducho.cservidoresmc.cServidoresMC;
 
 import java.io.File;
 import java.util.List;
@@ -18,12 +19,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  *
  * @author Cadiducho
+ * 
+ * Implementación para Bukkit, Spigot y Glowstone
  */
 
-public class Main extends JavaPlugin {
+public class IBukkit extends JavaPlugin implements cServidoresMC {
     
     private final Metodos met = new Metodos(this);
-    private Version updater;
+    private Updater updater;
     private final Inventario inv = new Inventario(this);
     
     private final VoteCMD voteCMD = new VoteCMD(this);
@@ -59,7 +62,7 @@ public class Main extends JavaPlugin {
         /*
          * Finalizar...
          */
-        updater = new Version(this, this.getVersion());
+        updater = new Updater(this, this.getVersion());
         debugLog("Checkeando nuevas versiones...");
         String actualizacion = updater.checkearVersion();
         if (actualizacion != null) {
@@ -111,44 +114,57 @@ public class Main extends JavaPlugin {
         
     }
     
-    
+    @Override
     public boolean isDebug() {
         return this.getConfig().getBoolean("debug");
     }
     
+    @Override
     public void debugLog(String s) {
         if (isDebug()){
             getLogger().log(Level.INFO, "[Debug] {0}", s);
         }
     }
     
+    @Override
     public void log(String s) {
         getLogger().log(Level.INFO, s);
     }
     
+    @Override
     public void log(Level l, String s){
         getLogger().log(l, s);
     }
     
+    @Override
     public Metodos getMetodos() {
         return this.met;
     }
     
+    @Override
     public String getVersion(){
         PluginDescriptionFile f = this.getDescription();
         return f.getVersion();
     }
     
+    @Override
     public String getTag() {
         return this.tag;     
     }
     
-    public Version getUpdater() {
+    @Override
+    public Updater getUpdater() {
         return this.updater;
     }
     
+    @Override
     public Inventario getInv() {
         return this.inv;
+    }
+
+    @Override
+    public IBukkit getInstance() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -1,6 +1,6 @@
 package com.cadiducho.cservidoresMC.util;
 
-import com.cadiducho.cservidoresMC.Main;
+import com.cadiducho.cservidoresmc.impl.IBukkit;
 import java.util.Iterator;
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -14,12 +14,12 @@ import org.bukkit.inventory.ItemStack;
  */
 public class Inventario {
     
-    public static Main plugin;
+    public static IBukkit plugin;
     public Inventory[] invOriginal = new Inventory[9999999];
     public Inventory[] invPremio = new Inventory[9999999];
     public Inventory[] invFinal = new Inventory[9999999];
     
-    public Inventario(Main instance) {
+    public Inventario(IBukkit instance) {
         plugin = instance;
     }
     

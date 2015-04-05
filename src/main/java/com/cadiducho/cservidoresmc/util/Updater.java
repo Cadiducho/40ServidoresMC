@@ -1,6 +1,6 @@
 package com.cadiducho.cservidoresMC.util;
 
-import com.cadiducho.cservidoresMC.Main;
+import com.cadiducho.cservidoresmc.impl.IBukkit;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,14 +12,14 @@ import java.net.URL;
  * @author Cadiducho
  */
 
-public class Version {
+public class Updater {
 
     private String versionRecomendada;
     private static String versionInstalada;
-    public static Main plugin;
+    public static IBukkit plugin;
     private final String readurl = "https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/master/etc/version.txt";
 
-    public Version(Main instance, String version) {
+    public Updater(IBukkit instance, String version) {
         plugin = instance;
         versionInstalada = version;
     }

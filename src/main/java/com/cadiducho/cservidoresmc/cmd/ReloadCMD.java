@@ -1,6 +1,6 @@
 package com.cadiducho.cservidoresMC.cmd;
 
-import com.cadiducho.cservidoresMC.Main;
+import com.cadiducho.cservidoresmc.impl.IBukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,9 +12,9 @@ import org.bukkit.command.CommandSender;
 
 public class ReloadCMD implements CommandExecutor {
     
-    public static Main plugin;
+    public static IBukkit plugin;
     
-    public ReloadCMD(Main instance) {
+    public ReloadCMD(IBukkit instance) {
         plugin = instance;
     }
     

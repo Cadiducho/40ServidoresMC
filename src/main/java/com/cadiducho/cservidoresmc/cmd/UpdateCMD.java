@@ -1,6 +1,6 @@
 package com.cadiducho.cservidoresMC.cmd;
 
-import com.cadiducho.cservidoresMC.Main;
+import com.cadiducho.cservidoresmc.impl.IBukkit;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,9 +13,9 @@ import org.bukkit.command.CommandSender;
 
 public class UpdateCMD implements CommandExecutor {
     
-    public static Main plugin;
+    public static IBukkit plugin;
     
-    public UpdateCMD(Main instance) {
+    public UpdateCMD(IBukkit instance) {
         plugin = instance;
     }
     

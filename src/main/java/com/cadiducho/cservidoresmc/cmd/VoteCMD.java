@@ -1,6 +1,6 @@
 package com.cadiducho.cservidoresMC.cmd;
 
-import com.cadiducho.cservidoresMC.Main;
+import com.cadiducho.cservidoresmc.impl.IBukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -15,9 +15,9 @@ import org.bukkit.entity.Player;
 
 public class VoteCMD implements CommandExecutor {
     
-    public static Main plugin;
+    public static IBukkit plugin;
     
-    public VoteCMD(Main instance) {
+    public VoteCMD(IBukkit instance) {
         plugin = instance;
     }
     
