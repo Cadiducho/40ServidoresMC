@@ -7,6 +7,7 @@ import com.cadiducho.cservidoresMC.util.Inventario;
 import com.cadiducho.cservidoresMC.util.Metodos;
 import com.cadiducho.cservidoresMC.util.Updater;
 import com.cadiducho.cservidoresmc.cServidoresMC;
+import com.cadiducho.cservidoresmc.util.LevelLog;
 
 import java.io.File;
 import java.util.List;
@@ -41,8 +42,11 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
     public List<String> listaComandos;
     public List<String> listaItems;
     
+    public static IBukkit instance;
+    
     @Override
     public void onEnable() {
+        instance = this;
         debugLog("Modo Debug activado en el plugin");
         /*
          * Generar y cargar Config.yml
@@ -62,7 +66,7 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
         /*
          * Finalizar...
          */
-        updater = new Updater(this, this.getVersion());
+        updater = new Updater(this, this.getVersion(), this.getServer().getVersion().split(":")[1]);
         debugLog("Checkeando nuevas versiones...");
         String actualizacion = updater.checkearVersion();
         if (actualizacion != null) {
@@ -88,7 +92,7 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
         configVer = this.getConfig().getInt("configVer", configVer);
         if (configVer == 0) { 
         } else if (configVer < configActual) {
-            log(Level.SEVERE, "Tu configuración es de una versión más antigua a la de este plugin!"
+            log(LevelLog.SEVERE, "Tu configuración es de una versión más antigua a la de este plugin!"
                 + "Corrigelo o podrás tener errores..." );
         }
         comandosCustom = this.getConfig().getBoolean("comandosCustom.activado", comandosCustom);
@@ -98,7 +102,7 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
             try {
                 listaComandos = this.getConfig().getStringList("comandosCustom.comandos");
             } catch (NullPointerException e) {
-                log(Level.WARNING, "No se ha podido cargar los premios de comandos customizados! (Error Config)");
+                log(LevelLog.WARNING, "No se ha podido cargar los premios de comandos customizados! (Error Config)");
                 comandosCustom = false;
             }    
         }
@@ -107,7 +111,7 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
             try {
                 listaItems = this.getConfig().getStringList("premioFisico.items");
             } catch (NullPointerException e) {
-                log(Level.WARNING, "No se ha podido cargar los premios fisicos! (Error Config)");
+                log(LevelLog.WARNING, "No se ha podido cargar los premios fisicos! (Error Config)");
                 premioFisico = false;
             }
         }
@@ -132,8 +136,10 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
     }
     
     @Override
-    public void log(Level l, String s){
-        getLogger().log(l, s);
+    public void log(LevelLog l, String s){
+        if (l == LevelLog.INFO) getLogger().info(s);
+        else if (l == LevelLog.SEVERE) getLogger().severe(s);
+        else if (l == LevelLog.WARNING) getLogger().warning(s);
     }
     
     @Override
@@ -161,10 +167,4 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
     public Inventario getInv() {
         return this.inv;
     }
-
-    @Override
-    public IBukkit getInstance() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

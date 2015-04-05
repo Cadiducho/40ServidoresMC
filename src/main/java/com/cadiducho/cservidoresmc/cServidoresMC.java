@@ -3,7 +3,7 @@ package com.cadiducho.cservidoresmc;
 import com.cadiducho.cservidoresMC.util.Inventario;
 import com.cadiducho.cservidoresMC.util.Metodos;
 import com.cadiducho.cservidoresMC.util.Updater;
-import java.util.logging.Level;
+import com.cadiducho.cservidoresmc.util.LevelLog;
 
 /**
  *
@@ -15,8 +15,6 @@ import java.util.logging.Level;
 
 public interface cServidoresMC {
     
-    public Object getInstance();
-    
     public Object getLogger(); //org.slf4j.Logger o java.util.logging.Logger
 
     public String getVersion();
@@ -27,7 +25,7 @@ public interface cServidoresMC {
     
     public void log(String s);
     
-    public void log(Level l, String s);
+    public void log(LevelLog l, String s);
     
     public String getTag();
     

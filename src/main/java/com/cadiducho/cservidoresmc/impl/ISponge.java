@@ -4,13 +4,16 @@ import com.cadiducho.cservidoresMC.util.Inventario;
 import com.cadiducho.cservidoresMC.util.Metodos;
 import com.cadiducho.cservidoresMC.util.Updater;
 import com.cadiducho.cservidoresmc.cServidoresMC;
+import com.cadiducho.cservidoresmc.util.LevelLog;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
-import java.util.logging.Level;
 import org.slf4j.Logger;
+import org.spongepowered.api.Game;
 import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.api.plugin.PluginManager;
 /**
  *
  * @author Cadiducho
@@ -20,13 +23,19 @@ import org.spongepowered.api.plugin.Plugin;
 @Plugin(id = "40ServidoresMC", name = "40ServidoresMC", version = "2.0")
 public class ISponge implements cServidoresMC {
     
+    @Inject private PluginManager pluginManager;
     public static ISponge instance;
-    @Inject
-    public static Logger logger;
+    @Inject public static Logger logger;
+    @Inject Game game;
+    private final String tag = "&8[&b40ServidoresMC&8]";
+    private final PluginContainer plugin = pluginManager.getPlugin("40ServidoresMC").orNull();
+    
+    private Updater updater;
     
     @Subscribe
     public void onEnable(InitializationEvent event) {
         instance = this;
+        updater = new Updater(this, this.getVersion() ,this.game.getMinecraftVersion().getName());
     }
     
     @Subscribe
@@ -40,13 +49,8 @@ public class ISponge implements cServidoresMC {
     }
 
     @Override
-    public ISponge getInstance() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public String getVersion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return plugin.getVersion();
     }
 
     @Override
@@ -56,37 +60,41 @@ public class ISponge implements cServidoresMC {
 
     @Override
     public void debugLog(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (isDebug()) {
+            logger.debug(s);
+        }
     }
 
     @Override
     public void log(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        logger.info(s);
     }
 
     @Override
-    public void log(Level l, String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getTag() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void log(LevelLog l, String s) {
+        if (l == LevelLog.INFO) logger.info(s);
+        else if (l == LevelLog.SEVERE) logger.error(s);
+        else if (l == LevelLog.WARNING) logger.warn(s);
     }
 
     @Override
     public Updater getUpdater() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return IBukkit.instance.getUpdater(); //nope
     }
 
     @Override
     public Inventario getInv() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return IBukkit.instance.getInv(); //nope
     }
 
     @Override
     public Metodos getMetodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return IBukkit.instance.getMetodos(); //nope
+    }
+
+    @Override
+    public String getTag() {
+        return this.tag;
     }
     
 }

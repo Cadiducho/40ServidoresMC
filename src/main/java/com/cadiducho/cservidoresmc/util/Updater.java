@@ -1,5 +1,6 @@
 package com.cadiducho.cservidoresMC.util;
 
+import com.cadiducho.cservidoresmc.cServidoresMC;
 import com.cadiducho.cservidoresmc.impl.IBukkit;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,12 +17,14 @@ public class Updater {
 
     private String versionRecomendada;
     private static String versionInstalada;
-    public static IBukkit plugin;
+    private static String versionMinecraft;
+    public static cServidoresMC plugin;
     private final String readurl = "https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/master/etc/version.txt";
 
-    public Updater(IBukkit instance, String version) {
+    public Updater(cServidoresMC instance, String vInstalada, String vMinecraft) {
         plugin = instance;
-        versionInstalada = version;
+        versionInstalada = vInstalada;
+        versionMinecraft = vMinecraft;
     }
 
 
@@ -35,8 +38,7 @@ public class Updater {
                 while ((str = br.readLine()) != null) {
                     String line = str;
                     String[] tokens = line.split(":");
-                    String[] versionMC = plugin.getServer().getVersion().split(":");
-                    if (versionMC[1].contains(tokens[0])) {
+                    if (versionMinecraft.contains(tokens[0])) {
                         versionRecomendada = tokens[1];
                                    
                         if (versionInstalada.matches(tokens[1])) {
