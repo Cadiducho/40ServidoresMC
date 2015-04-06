@@ -1,6 +1,5 @@
 package com.cadiducho.cservidoresmc.impl;
 
-import com.cadiducho.cservidoresMC.util.Inventario;
 import com.cadiducho.cservidoresMC.util.Metodos;
 import com.cadiducho.cservidoresMC.util.Updater;
 import com.cadiducho.cservidoresmc.cServidoresMC;
@@ -29,7 +28,7 @@ public class ISponge implements cServidoresMC {
     @Inject Game game;
     private final String tag = "&8[&b40ServidoresMC&8]";
     private final PluginContainer plugin = pluginManager.getPlugin("40ServidoresMC").orNull();
-    
+    private final Metodos met = new Metodos(this);
     private Updater updater;
     
     @Subscribe
@@ -79,17 +78,12 @@ public class ISponge implements cServidoresMC {
 
     @Override
     public Updater getUpdater() {
-        return IBukkit.instance.getUpdater(); //nope
-    }
-
-    @Override
-    public Inventario getInv() {
-        return IBukkit.instance.getInv(); //nope
+        return this.updater;
     }
 
     @Override
     public Metodos getMetodos() {
-        return IBukkit.instance.getMetodos(); //nope
+        return this.met;
     }
 
     @Override

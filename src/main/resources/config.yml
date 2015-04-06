@@ -8,15 +8,4 @@ comandosCustom:
     activado: true
     comandos:
     - money add {0} 10
-premioFisico:
-    activado: true
-    items:
-    - 267,1
-    - 261,1
-    - 262,64
-    - 364,16
-    - 306,1
-    - 307,1
-    - 308,1
-    - 309,1
 configVer: 2

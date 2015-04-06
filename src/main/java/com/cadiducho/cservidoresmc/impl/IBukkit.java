@@ -3,7 +3,6 @@ package com.cadiducho.cservidoresmc.impl;
 import com.cadiducho.cservidoresMC.cmd.ReloadCMD;
 import com.cadiducho.cservidoresMC.cmd.UpdateCMD;
 import com.cadiducho.cservidoresMC.cmd.VoteCMD;
-import com.cadiducho.cservidoresMC.util.Inventario;
 import com.cadiducho.cservidoresMC.util.Metodos;
 import com.cadiducho.cservidoresMC.util.Updater;
 import com.cadiducho.cservidoresmc.cServidoresMC;
@@ -28,7 +27,6 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
     
     private final Metodos met = new Metodos(this);
     private Updater updater;
-    private final Inventario inv = new Inventario(this);
     
     private final VoteCMD voteCMD = new VoteCMD(this);
     private final UpdateCMD updateCMD = new UpdateCMD(this);
@@ -38,9 +36,7 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
     public int configVer = 0;
     public final int configActual = 2;
     public boolean comandosCustom = true;
-    public boolean premioFisico = true;
     public List<String> listaComandos;
-    public List<String> listaItems;
     
     public static IBukkit instance;
     
@@ -96,7 +92,6 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
                 + "Corrigelo o podrás tener errores..." );
         }
         comandosCustom = this.getConfig().getBoolean("comandosCustom.activado", comandosCustom);
-        premioFisico = this.getConfig().getBoolean("premioFisico.activado", premioFisico);
         
         if (comandosCustom) {
             try {
@@ -105,17 +100,7 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
                 log(LevelLog.WARNING, "No se ha podido cargar los premios de comandos customizados! (Error Config)");
                 comandosCustom = false;
             }    
-        }
-        
-        if (premioFisico) {
-            try {
-                listaItems = this.getConfig().getStringList("premioFisico.items");
-            } catch (NullPointerException e) {
-                log(LevelLog.WARNING, "No se ha podido cargar los premios fisicos! (Error Config)");
-                premioFisico = false;
-            }
-        }
-        
+        }        
     }
     
     @Override
@@ -162,9 +147,5 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
     public Updater getUpdater() {
         return this.updater;
     }
-    
-    @Override
-    public Inventario getInv() {
-        return this.inv;
-    }
+
 }

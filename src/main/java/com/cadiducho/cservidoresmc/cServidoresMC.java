@@ -1,6 +1,5 @@
 package com.cadiducho.cservidoresmc;
 
-import com.cadiducho.cservidoresMC.util.Inventario;
 import com.cadiducho.cservidoresMC.util.Metodos;
 import com.cadiducho.cservidoresMC.util.Updater;
 import com.cadiducho.cservidoresmc.util.LevelLog;
@@ -30,8 +29,6 @@ public interface cServidoresMC {
     public String getTag();
     
     public Updater getUpdater();
-
-    public Inventario getInv();
     
     public Metodos getMetodos();
     

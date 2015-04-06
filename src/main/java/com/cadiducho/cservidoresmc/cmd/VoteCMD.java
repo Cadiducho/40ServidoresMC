@@ -39,11 +39,11 @@ public class VoteCMD implements CommandExecutor {
                         }
                         String msg1 = plugin.getTag()+plugin.getConfig().getString("mensaje");
                         sender.sendMessage(plugin.getMetodos().colorizar(msg1));
-                        if (plugin.premioFisico) {
+                        /*if (plugin.premioFisico) { 
                             plugin.getInv().darPremio(player);
                             System.out.println("["+ plugin.getName() + player + "Ha obtenido un premio por votar");
 
-                        }
+                        }*/
                         if (plugin.comandosCustom) {
                             for (String cmds : plugin.listaComandos) {
                                 String comando = cmds.replace("{0}", player.getName());
