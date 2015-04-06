@@ -1,7 +1,6 @@
 package com.cadiducho.cservidoresMC.util;
 
 import com.cadiducho.cservidoresmc.cServidoresMC;
-import com.cadiducho.cservidoresmc.impl.IBukkit;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,11 +14,10 @@ import java.net.URL;
 
 public class Updater {
 
-    private String versionRecomendada;
-    private static String versionInstalada;
-    private static String versionMinecraft;
+    String a, b, c;
+    private static String versionInstalada, versionMinecraft;
     public static cServidoresMC plugin;
-    private final String readurl = "https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/master/etc/version.txt";
+    private final String readurl = "https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/master/etc/version.v2"; //TODO Mantener ruta actualizada
 
     public Updater(cServidoresMC instance, String vInstalada, String vMinecraft) {
         plugin = instance;
@@ -39,23 +37,32 @@ public class Updater {
                     String line = str;
                     String[] tokens = line.split(":");
                     if (versionMinecraft.contains(tokens[0])) {
-                        versionRecomendada = tokens[1];
+                        
+                        //Asignamos todos los valores obtenidos de la web
+                        String vActualizada, tipoActualizacion, changelog, urlDescarga;
+                        vActualizada = tokens[1];
+                        tipoActualizacion = tokens[2];
+                        changelog = tokens[3];
+                        urlDescarga = tokens[4];
                                    
-                        if (versionInstalada.matches(tokens[1])) {
-                            a = "Version actualizada";
-                        } else {
-                            a = "Version desactualizada. Nueva version: [{2}]{0} Changelog: {1}".replace("{0}", versionRecomendada).replace("{1}", tokens[2]).replace("{2}", tokens[3]);
+                        if (versionInstalada.matches(vActualizada)) a = "Versión actualizada";
+                        else {
+                            a = "Versión desactualizada. Nueva version: "
+                                    + "["+tipoActualizacion+"]"
+                                    + vActualizada
+                                    + "Changelog: " + changelog
+                                    + "Descarga en: " + urlDescarga;
                         }
                     } 
                 }
                 br.close();
             } catch (IOException ex) {
-                a = plugin.getTag()+"Error obteniendo la versión";
+                a = "Error obteniendo la versión";
                 plugin.debugLog("Error obteniendo la versión. Causa: ");
                 plugin.debugLog(ex.getMessage());
             }
         } catch (MalformedURLException ex) {
-            a = plugin.getTag()+"Error obteniendo la versión";
+            a = "Error obteniendo la versión";
             plugin.debugLog("Error obteniendo la versión. Causa: ");
             plugin.debugLog(ex.getMessage());
         }

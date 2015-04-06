@@ -66,7 +66,7 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
         debugLog("Checkeando nuevas versiones...");
         String actualizacion = updater.checkearVersion();
         if (actualizacion != null) {
-            if (!actualizacion.equalsIgnoreCase("version actualizada")) { 
+            if (!actualizacion.equalsIgnoreCase("Versión actualizada")) { 
                 log(actualizacion);
             }
         }

@@ -34,7 +34,18 @@ public class ISponge implements cServidoresMC {
     @Subscribe
     public void onEnable(InitializationEvent event) {
         instance = this;
+        
+        /*
+         * Checkear actualizaciones
+         */
         updater = new Updater(this, this.getVersion() ,this.game.getMinecraftVersion().getName());
+        debugLog("Checkeando nuevas versiones...");
+        String actualizacion = updater.checkearVersion();
+        if (actualizacion != null) {
+            if (!actualizacion.equalsIgnoreCase("Versión actualizada")) { 
+                log(actualizacion);
+            }
+        }
     }
     
     @Subscribe
@@ -54,7 +65,7 @@ public class ISponge implements cServidoresMC {
 
     @Override
     public boolean isDebug() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return IBukkit.instance.isDebug(); //TODO Cambiar a configuración de Sponge
     }
 
     @Override
