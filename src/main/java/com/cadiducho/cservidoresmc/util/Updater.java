@@ -47,7 +47,7 @@ public class Updater {
                                    
                         if (versionInstalada.matches(vActualizada)) a = "Versión actualizada";
                         else {
-                            a = "Versión desactualizada. Nueva version: "
+                            a = "Versión desactualizada. Nueva versión: "
                                     + "["+tipoActualizacion+"]"
                                     + vActualizada
                                     + "Changelog: " + changelog

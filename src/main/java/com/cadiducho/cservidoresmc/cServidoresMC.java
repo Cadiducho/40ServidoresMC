@@ -32,4 +32,6 @@ public interface cServidoresMC {
     
     public Metodos getMetodos();
     
+    public Object getInstance(); //IBukkit o ISponge
+    
 }
