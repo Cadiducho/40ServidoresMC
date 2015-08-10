@@ -1,12 +1,8 @@
 package com.cadiducho.cservidoresmc.bukkit.util;
 
 import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
-import com.cadiducho.cservidoresmc.cServidoresMC;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
  
 /**
  *
@@ -18,7 +14,8 @@ public class Updater {
     String a, b, c;
     private static String versionInstalada, versionMinecraft;
     public static BukkitPlugin plugin;
-    private final String readurl = "https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/master/etc/version.v2"; //TODO Mantener ruta actualizada
+    private final String readurl = "https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/master/etc/v2.json"; //TODO Mantener ruta actualizada
+    private static final JSONParser jsonParser = new JSONParser();
 
     public Updater(BukkitPlugin instance, String vInstalada, String vMinecraft) {
         plugin = instance;
@@ -31,38 +28,34 @@ public class Updater {
         String a = null;
         try {
             plugin.debugLog("Buscando nueva versión...");
-            URL url = new URL(readurl);
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()))) {
-                String str;
-                while ((str = br.readLine()) != null) {
-                    String line = str;
-                    String[] tokens = line.split(":");
-                    if (versionMinecraft.contains(tokens[0])) {
-                        
-                        //Asignamos todos los valores obtenidos de la web
-                        String vActualizada, tipoActualizacion, changelog, urlDescarga;
-                        vActualizada = tokens[1];
-                        tipoActualizacion = tokens[2];
-                        changelog = tokens[3];
-                        urlDescarga = tokens[4];
-                                   
-                        if (versionInstalada.matches(vActualizada)) a = "Versión actualizada";
-                        else {
+            String url = Util.readUrl("https://api.buycraft.net/v4?action=payments&secret=220139c76ce230f9a1b8fd7928e3b534090a5634");
+            Object parsedData = jsonParser.parse(url);
+            
+            if (parsedData instanceof JSONObject) {
+                JSONObject jsonData = (JSONObject) parsedData;
+                boolean online = (boolean) jsonData.get("online");
+                if (!online) {
+                    a = "El Updater ha sido remotamente desactivado debido a un mantenimiento";
+                } else {
+                    if (jsonData.containsKey(versionMinecraft)) {
+                        JSONObject array = (JSONObject) jsonData.get(versionMinecraft);
+                        String ultimaVersion = (String) array.get("lastVersion");
+                        if (versionInstalada.matches(ultimaVersion)) {
+                            a = "Versión actualizada";
+                        } else {
+                            String urlDescarga = (String) array.get("lastDownload");
+                            String changelog = (String) array.get("cambiosBreves");
                             a = "Versión desactualizada. Nueva versión: "
-                                    + "["+tipoActualizacion+"]"
-                                    + vActualizada
+                                    + ultimaVersion
                                     + "Changelog: " + changelog
                                     + "Descarga en: " + urlDescarga;
-                        }
-                    } 
+                        }    
+                    } else {
+                        a = "No se ha encontrado plugin para la versión de servidor que estas ejecutando";
+                    }
                 }
-                br.close();
-            } catch (IOException ex) {
-                a = "Error obteniendo la versión";
-                plugin.debugLog("Error obteniendo la versión. Causa: ");
-                plugin.debugLog(ex.getMessage());
             }
-        } catch (MalformedURLException ex) {
+        } catch (Exception ex) {
             a = "Error obteniendo la versión";
             plugin.debugLog("Error obteniendo la versión. Causa: ");
             plugin.debugLog(ex.getMessage());
