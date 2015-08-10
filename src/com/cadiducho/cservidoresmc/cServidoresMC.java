@@ -1,8 +1,8 @@
 package com.cadiducho.cservidoresmc;
 
-import com.cadiducho.cservidoresMC.util.Metodos;
-import com.cadiducho.cservidoresMC.util.Updater;
-import com.cadiducho.cservidoresmc.util.LevelLog;
+import com.cadiducho.cservidoresmc.bukkit.util.Util;
+import com.cadiducho.cservidoresmc.bukkit.util.Updater;
+import com.cadiducho.cservidoresmc.bukkit.util.LevelLog;
 
 /**
  *
@@ -30,7 +30,7 @@ public interface cServidoresMC {
     
     public Updater getUpdater();
     
-    public Metodos getMetodos();
+    public Util getMetodos();
     
     public Object getInstance(); //IBukkit o ISponge
     

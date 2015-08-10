@@ -1,9 +1,10 @@
-package com.cadiducho.cservidoresmc.impl;
+package com.cadiducho.cservidoresmc.sponge;
 
-import com.cadiducho.cservidoresMC.util.Metodos;
-import com.cadiducho.cservidoresMC.util.Updater;
+import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
+import com.cadiducho.cservidoresmc.bukkit.util.Util;
+import com.cadiducho.cservidoresmc.bukkit.util.Updater;
 import com.cadiducho.cservidoresmc.cServidoresMC;
-import com.cadiducho.cservidoresmc.util.LevelLog;
+import com.cadiducho.cservidoresmc.bukkit.util.LevelLog;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
@@ -20,15 +21,15 @@ import org.spongepowered.api.plugin.PluginManager;
  * Implementación para Sponge y Granite
  */
 @Plugin(id = "40ServidoresMC", name = "40ServidoresMC", version = "2.0")
-public class ISponge implements cServidoresMC {
-    
+public class SpongePlugin {
+    /*
     @Inject private PluginManager pluginManager;
-    public static ISponge instance;
+    public static SpongePlugin instance;
     @Inject public static Logger logger;
     @Inject Game game;
     private final String tag = "&8[&b40ServidoresMC&8]";
     private final PluginContainer plugin = pluginManager.getPlugin("40ServidoresMC").orNull();
-    private final Metodos met = new Metodos(this);
+    private final Util met = new Util(this);
     private Updater updater;
     
     @Subscribe
@@ -37,8 +38,8 @@ public class ISponge implements cServidoresMC {
         
         /*
          * Checkear actualizaciones
-         */
-        updater = new Updater(this, this.getVersion() ,this.game.getMinecraftVersion().getName());
+         *
+        updater = new Updater(this, this.getVersion() ,this.game.getPlatform().getMinecraftVersion().getName());
         debugLog("Checkeando nuevas versiones...");
         String actualizacion = updater.checkearVersion();
         if (actualizacion != null) {
@@ -65,7 +66,7 @@ public class ISponge implements cServidoresMC {
 
     @Override
     public boolean isDebug() {
-        return IBukkit.instance.isDebug(); //TODO Cambiar a configuración de Sponge
+        return BukkitPlugin.instance.isDebug(); //TODO Cambiar a configuración de Sponge
     }
 
     @Override
@@ -93,7 +94,7 @@ public class ISponge implements cServidoresMC {
     }
 
     @Override
-    public Metodos getMetodos() {
+    public Util getMetodos() {
         return this.met;
     }
 
@@ -101,5 +102,10 @@ public class ISponge implements cServidoresMC {
     public String getTag() {
         return this.tag;
     }
-    
+
+    @Override
+    public Object getInstance() {
+        return SpongePlugin.instance;
+    }
+    */
 }

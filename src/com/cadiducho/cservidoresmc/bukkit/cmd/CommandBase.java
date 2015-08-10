@@ -1,11 +1,10 @@
-package com.cadiducho.cservidoresmc.cmd;
+package com.cadiducho.cservidoresmc.bukkit.cmd;
 
 /**
  *
  * @author Cadiducho
  */
 
-import com.cadiducho.cservidoresmc.cServidoresMC;
 import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -16,7 +15,6 @@ public abstract class CommandBase implements ICommandBase {
     private final transient String name;
     private final transient String perm;
     private final transient List<String> aliases;
-    protected static transient Object plugin = cServidoresMC.getInstance();
       
     protected CommandBase(final String name, final String perm, final List<String> aliases) {
         this.name = name;

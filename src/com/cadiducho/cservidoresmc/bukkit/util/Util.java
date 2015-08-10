@@ -1,6 +1,6 @@
-package com.cadiducho.cservidoresMC.util;
+package com.cadiducho.cservidoresmc.bukkit.util;
 
-import com.cadiducho.cservidoresmc.cServidoresMC;
+import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,13 +15,14 @@ import org.bukkit.entity.Player;
  *
  * @author Cadiducho
  */
-public class Metodos {
+public class Util {
     
-    public static cServidoresMC plugin;
-    
-    public Metodos(cServidoresMC instance) {
+    private static BukkitPlugin plugin;
+
+    public Util(BukkitPlugin instance) {
         plugin = instance;
     }
+
     
     public int getVoto(Player p, String clave) {
         try {
@@ -46,6 +47,7 @@ public class Metodos {
         }
         return -1;
     }
+    
     
     public String colorizar(String s) { //TODO: ¿Compatible con Sponge?
         return s.

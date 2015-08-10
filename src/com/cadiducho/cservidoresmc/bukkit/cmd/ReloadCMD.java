@@ -1,6 +1,6 @@
-package com.cadiducho.cservidoresMC.cmd;
+package com.cadiducho.cservidoresmc.bukkit.cmd;
 
-import com.cadiducho.cservidoresmc.impl.IBukkit;
+import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,9 +12,9 @@ import org.bukkit.command.CommandSender;
 
 public class ReloadCMD implements CommandExecutor {
     
-    public static IBukkit plugin;
+    public static BukkitPlugin plugin;
     
-    public ReloadCMD(IBukkit instance) {
+    public ReloadCMD(BukkitPlugin instance) {
         plugin = instance;
     }
     
@@ -27,7 +27,7 @@ public class ReloadCMD implements CommandExecutor {
         	
           String msg5 = plugin.getTag()
             +"&aConfiguración recargada correctamente\n&"
-            +plugin.getTag()+"aFuncionando versión" + plugin.getVersion();
+            +plugin.getTag()+"aFuncionando versión" + plugin.getPluginVersion();
           
           sender.sendMessage(plugin.getMetodos().colorizar(msg5));
           

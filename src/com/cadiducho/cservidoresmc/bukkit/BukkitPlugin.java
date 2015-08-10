@@ -1,16 +1,17 @@
-package com.cadiducho.cservidoresmc.impl;
+package com.cadiducho.cservidoresmc.bukkit;
 
-import com.cadiducho.cservidoresMC.cmd.ReloadCMD;
-import com.cadiducho.cservidoresMC.cmd.UpdateCMD;
-import com.cadiducho.cservidoresMC.cmd.VoteCMD;
-import com.cadiducho.cservidoresMC.util.Metodos;
-import com.cadiducho.cservidoresMC.util.Updater;
+import com.cadiducho.cservidoresmc.bukkit.cmd.ReloadCMD;
+import com.cadiducho.cservidoresmc.bukkit.cmd.UpdateCMD;
+import com.cadiducho.cservidoresmc.bukkit.cmd.VoteCMD;
+import com.cadiducho.cservidoresmc.bukkit.util.Util;
+import com.cadiducho.cservidoresmc.bukkit.util.Updater;
 import com.cadiducho.cservidoresmc.cServidoresMC;
-import com.cadiducho.cservidoresmc.util.LevelLog;
+import com.cadiducho.cservidoresmc.bukkit.util.LevelLog;
 
 import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
+import org.bukkit.command.CommandSender;
 
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -23,9 +24,9 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Implementación para Bukkit, Spigot y Glowstone
  */
 
-public class IBukkit extends JavaPlugin implements cServidoresMC {
+public class BukkitPlugin extends JavaPlugin {
     
-    private final Metodos met = new Metodos(this);
+    private final Util met = new Util(this);
     private Updater updater;
     
     private final VoteCMD voteCMD = new VoteCMD(this);
@@ -38,7 +39,7 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
     public boolean comandosCustom = true;
     public List<String> listaComandos;
     
-    public static IBukkit instance;
+    public static BukkitPlugin instance;
     
     @Override
     public void onEnable() {
@@ -62,7 +63,7 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
         /*
          * Finalizar...
          */
-        updater = new Updater(this, this.getVersion(), this.getServer().getVersion().split(":")[1]);
+        updater = new Updater(this, this.getPluginVersion(), this.getServer().getVersion().split(":")[1]);
         debugLog("Checkeando nuevas versiones...");
         String actualizacion = updater.checkearVersion();
         if (actualizacion != null) {
@@ -70,7 +71,7 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
                 log(actualizacion);
             }
         }
-        log("Plugin 40ServidoresMC v"+this.getVersion()+" cargado completamente");
+        log("Plugin 40ServidoresMC v"+this.getPluginVersion()+" cargado completamente");
     }
     
     public void cargarConfig() {
@@ -103,49 +104,49 @@ public class IBukkit extends JavaPlugin implements cServidoresMC {
         }        
     }
     
-    @Override
     public boolean isDebug() {
         return this.getConfig().getBoolean("debug");
     }
     
-    @Override
     public void debugLog(String s) {
         if (isDebug()){
             getLogger().log(Level.INFO, "[Debug] {0}", s);
         }
     }
     
-    @Override
     public void log(String s) {
         getLogger().log(Level.INFO, s);
     }
     
-    @Override
     public void log(LevelLog l, String s){
         if (l == LevelLog.INFO) getLogger().info(s);
         else if (l == LevelLog.SEVERE) getLogger().severe(s);
         else if (l == LevelLog.WARNING) getLogger().warning(s);
     }
     
-    @Override
-    public Metodos getMetodos() {
+    public void sendMessage(String str, CommandSender sender) {
+        
+    }
+    
+    public Util getMetodos() {
         return this.met;
     }
     
-    @Override
-    public String getVersion(){
+    public String getPluginVersion(){
         PluginDescriptionFile f = this.getDescription();
         return f.getVersion();
     }
     
-    @Override
     public String getTag() {
         return this.tag;     
     }
     
-    @Override
     public Updater getUpdater() {
         return this.updater;
+    }
+
+    public static BukkitPlugin getInstance() {
+        return BukkitPlugin.instance;
     }
 
 }

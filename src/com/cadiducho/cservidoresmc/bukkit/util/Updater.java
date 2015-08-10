@@ -1,5 +1,6 @@
-package com.cadiducho.cservidoresMC.util;
+package com.cadiducho.cservidoresmc.bukkit.util;
 
+import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
 import com.cadiducho.cservidoresmc.cServidoresMC;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,10 +17,10 @@ public class Updater {
 
     String a, b, c;
     private static String versionInstalada, versionMinecraft;
-    public static cServidoresMC plugin;
+    public static BukkitPlugin plugin;
     private final String readurl = "https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/master/etc/version.v2"; //TODO Mantener ruta actualizada
 
-    public Updater(cServidoresMC instance, String vInstalada, String vMinecraft) {
+    public Updater(BukkitPlugin instance, String vInstalada, String vMinecraft) {
         plugin = instance;
         versionInstalada = vInstalada;
         versionMinecraft = vMinecraft;

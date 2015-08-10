@@ -1,4 +1,4 @@
-package com.cadiducho.cservidoresmc.util;
+package com.cadiducho.cservidoresmc.bukkit.util;
 
 /**
  *
