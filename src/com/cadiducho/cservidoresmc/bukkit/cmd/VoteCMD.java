@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 
 public class VoteCMD extends CommandBase {
       
-    public VoteCMD(BukkitPlugin instance) {
+    public VoteCMD() {
         super("voto40", "40servidores.voto", Arrays.asList("votar40", "vote40", "mivoto40"));
     }
 

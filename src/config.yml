@@ -6,4 +6,5 @@ broadcast:
 mensaje: '&6Gracias por votarnos! Aqui tienes tu premio: '
 comandosCustom: 
 - money add {0} 10
+readTimeOut: 5000
 configVer: 3

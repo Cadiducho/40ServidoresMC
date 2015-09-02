@@ -13,3 +13,8 @@ commands:
     reload40:
         description: Comando para recargar el plugin
         aliases: [recargar40, config40]
+    stats40:
+        description: Estadisticas de tu servidor
+        aliases: []
+    test40:
+        description: Testea el premio que das a tus jugadores

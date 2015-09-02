@@ -22,7 +22,11 @@ public class CommandManager implements TabCompleter {
     public static CommandManager managerCmds;
 
     public static void load() {
-
+        cmds.add(new ReloadCMD());
+        cmds.add(new StatsCMD());
+        cmds.add(new TestCMD());
+        cmds.add(new UpdateCMD());
+        cmds.add(new VoteCMD());
         //
         managerCmds = new CommandManager();
         //

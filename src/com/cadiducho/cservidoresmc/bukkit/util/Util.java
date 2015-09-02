@@ -82,6 +82,7 @@ public class Util {
         URL url = new URL(urlString);
         HttpURLConnection request1 = (HttpURLConnection) url.openConnection();
         request1.setRequestMethod("GET");
+        request1.setReadTimeout(plugin.getConfig().getInt("readTimeOut"));
         request1.connect();
         InputStream is = request1.getInputStream();
         BufferedReader bf_reader = new BufferedReader(new InputStreamReader(is));
