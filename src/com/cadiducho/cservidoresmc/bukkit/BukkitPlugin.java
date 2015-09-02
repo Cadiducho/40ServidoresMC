@@ -5,12 +5,12 @@ import com.cadiducho.cservidoresmc.bukkit.cmd.UpdateCMD;
 import com.cadiducho.cservidoresmc.bukkit.cmd.VoteCMD;
 import com.cadiducho.cservidoresmc.bukkit.util.Util;
 import com.cadiducho.cservidoresmc.bukkit.util.Updater;
-import com.cadiducho.cservidoresmc.cServidoresMC;
-import com.cadiducho.cservidoresmc.bukkit.util.LevelLog;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -29,13 +29,9 @@ public class BukkitPlugin extends JavaPlugin {
     private final Util met = new Util(this);
     private Updater updater;
     
-    private final VoteCMD voteCMD = new VoteCMD(this);
-    private final UpdateCMD updateCMD = new UpdateCMD(this);
-    private final ReloadCMD reloadCMD = new ReloadCMD(this);
-    
     private final String tag = "&8[&b40ServidoresMC&8]";
     public int configVer = 0;
-    public final int configActual = 2;
+    public final int configActual = 3;
     public boolean comandosCustom = true;
     public List<String> listaComandos;
     
@@ -56,9 +52,7 @@ public class BukkitPlugin extends JavaPlugin {
         PluginManager pluginManager = this.getServer().getPluginManager();
         debugLog("Registrando comandos y eventos...");
         
-        this.getCommand("vote40").setExecutor(voteCMD);
-        this.getCommand("update40").setExecutor(updateCMD);
-        this.getCommand("reload40").setExecutor(reloadCMD);
+        CommandManager.load();
         
         /*
          * Finalizar...
@@ -89,7 +83,7 @@ public class BukkitPlugin extends JavaPlugin {
         configVer = this.getConfig().getInt("configVer", configVer);
         if (configVer == 0) { 
         } else if (configVer < configActual) {
-            log(LevelLog.SEVERE, "Tu configuración es de una versión más antigua a la de este plugin!"
+            log(Level.SEVERE, "Tu configuración es de una versión más antigua a la de este plugin!"
                 + "Corrigelo o podrás tener errores..." );
         }
         comandosCustom = this.getConfig().getBoolean("comandosCustom.activado", comandosCustom);
@@ -98,10 +92,21 @@ public class BukkitPlugin extends JavaPlugin {
             try {
                 listaComandos = this.getConfig().getStringList("comandosCustom.comandos");
             } catch (NullPointerException e) {
-                log(LevelLog.WARNING, "No se ha podido cargar los premios de comandos customizados! (Error Config)");
+                log(Level.WARNING, "No se ha podido cargar los premios de comandos customizados! (Error Config)");
                 comandosCustom = false;
             }    
         }        
+    }
+    
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        try {
+            CommandManager.onCmd(sender, cmd, label, args);
+        } catch (Exception ex) {
+            log(Level.SEVERE, "Error al ejecutar el comando '" + label + Arrays.toString(args)+"'");
+            debugLog(ex.getMessage());
+        }
+        return true;
     }
     
     public boolean isDebug() {
@@ -118,14 +123,12 @@ public class BukkitPlugin extends JavaPlugin {
         getLogger().log(Level.INFO, s);
     }
     
-    public void log(LevelLog l, String s){
-        if (l == LevelLog.INFO) getLogger().info(s);
-        else if (l == LevelLog.SEVERE) getLogger().severe(s);
-        else if (l == LevelLog.WARNING) getLogger().warning(s);
+    public void log(Level l, String s){
+       getLogger().log(l, tag);
     }
     
     public void sendMessage(String str, CommandSender sender) {
-        
+        sender.sendMessage(met.colorizar(tag+" "+str));
     }
     
     public Util getMetodos() {

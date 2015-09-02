@@ -28,7 +28,7 @@ public class Updater {
         String a = null;
         try {
             plugin.debugLog("Buscando nueva versión...");
-            String url = Util.readUrl("https://api.buycraft.net/v4?action=payments&secret=220139c76ce230f9a1b8fd7928e3b534090a5634");
+            String url = Util.readUrl(readurl);
             Object parsedData = jsonParser.parse(url);
             
             if (parsedData instanceof JSONObject) {

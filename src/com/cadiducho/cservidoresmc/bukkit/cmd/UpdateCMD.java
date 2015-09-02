@@ -1,6 +1,7 @@
 package com.cadiducho.cservidoresmc.bukkit.cmd;
 
 import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
+import java.util.Arrays;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,29 +12,21 @@ import org.bukkit.command.CommandSender;
  * @author Cadiducho
  */
 
-public class UpdateCMD implements CommandExecutor {
+public class UpdateCMD extends CommandBase {
     
-    public static BukkitPlugin plugin;
-    
-    public UpdateCMD(BukkitPlugin instance) {
-        plugin = instance;
+    public UpdateCMD() {
+        super("update40", "40servidores.actualizar", Arrays.asList("actualizar40", "upd40"));
     }
-    
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender.hasPermission("40servidores.actualizar")) { 
-            String act = plugin.getUpdater().checkearVersion();
-            if (act != null) {
-                sender.sendMessage(plugin.getMetodos().colorizar(plugin.getTag()+"&a"+act));
-                
-                System.out.println("["+ plugin.getName() +"] Version: " + act);
 
-            }
-        } else {
-            String msg4 = plugin.getTag()+"&cNo tienes permiso para ejecutar este comando.";
-            sender.sendMessage(plugin.getMetodos().colorizar(msg4));
+    @Override
+    public void run(CommandSender sender, String label, String[] args) {
+        if (!perm(sender, getPermission(), true)) return;
+        
+        String act = plugin.getUpdater().checkearVersion();
+        if (act != null) {
+            sender.sendMessage(plugin.getMetodos().colorizar(plugin.getTag()+"&a"+act));
+            System.out.println("["+ plugin.getName() +"] Version: " + act);
         }
-        return true;
     }
     
 }

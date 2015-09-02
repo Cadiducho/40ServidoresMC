@@ -1,32 +1,31 @@
 package com.cadiducho.cservidoresmc.bukkit.cmd;
 
 import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
+import java.util.Arrays;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
  *
  * @author Cadiducho
+ * @ToDo: Actualizar a la nueva API
  */
 
-public class VoteCMD implements CommandExecutor {
-    
-    public static BukkitPlugin plugin;
-    
+public class VoteCMD extends CommandBase {
+      
     public VoteCMD(BukkitPlugin instance) {
-        plugin = instance;
+        super("voto40", "40servidores.voto", Arrays.asList("votar40", "vote40", "mivoto40"));
     }
-    
+
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender.hasPermission("40servidores.voto")) {
-            if (sender instanceof Player) { 
-                Player player = (Player)sender;
-                switch (plugin.getMetodos().getVoto(player, plugin.getConfig().getString("clave"))) {
+    public void run(CommandSender sender, String label, String[] args) {
+        if (!perm(sender, getPermission(), true)) return;
+        if (!soloJugador(sender, true)) return;
+        
+        Player player = (Player)sender;
+            switch (plugin.getMetodos().getVoto(player, plugin.getConfig().getString("clave"))) {
                     case 0:
                         String msg0 = plugin.getTag()+"&6No has votado hoy! Puedes hacerlo en &ahttp://www.40servidoresmc.es/";
                         sender.sendMessage(plugin.getMetodos().colorizar(msg0));
@@ -39,11 +38,6 @@ public class VoteCMD implements CommandExecutor {
                         }
                         String msg1 = plugin.getTag()+plugin.getConfig().getString("mensaje");
                         sender.sendMessage(plugin.getMetodos().colorizar(msg1));
-                        /*if (plugin.premioFisico) { 
-                            plugin.getInv().darPremio(player);
-                            System.out.println("["+ plugin.getName() + player + "Ha obtenido un premio por votar");
-
-                        }*/
                         if (plugin.comandosCustom) {
                             for (String cmds : plugin.listaComandos) {
                                 String comando = cmds.replace("{0}", player.getName());
@@ -62,16 +56,6 @@ public class VoteCMD implements CommandExecutor {
                         //Fallo
                         break;    
                 }
-
-            } else {
-                String msg = plugin.getTag()+"&cNo puedes usar este comando si no eres un jugador";
-                sender.sendMessage(plugin.getMetodos().colorizar(msg)); 
-            }
-        } else {
-            String msg4 = plugin.getTag()+"&cNo tienes permiso para ejecutar este comando.";
-            sender.sendMessage(plugin.getMetodos().colorizar(msg4));
-        }
-        return true;
     }
     
 }

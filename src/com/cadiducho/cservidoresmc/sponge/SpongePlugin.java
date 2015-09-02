@@ -3,8 +3,6 @@ package com.cadiducho.cservidoresmc.sponge;
 import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
 import com.cadiducho.cservidoresmc.bukkit.util.Util;
 import com.cadiducho.cservidoresmc.bukkit.util.Updater;
-import com.cadiducho.cservidoresmc.cServidoresMC;
-import com.cadiducho.cservidoresmc.bukkit.util.LevelLog;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import org.slf4j.Logger;

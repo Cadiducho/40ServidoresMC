@@ -2,10 +2,12 @@ package com.cadiducho.cservidoresmc.bukkit.cmd;
 
 /**
  *
- * @author Cadiducho
+ * @author Cadiducho. Framework de comandos de Meriland.es
  */
 
+import java.util.ArrayList;
 import java.util.List;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -59,6 +61,11 @@ public abstract class CommandBase implements ICommandBase {
             return true;
         }
         return p.hasPermission(perm);    
+    }
+    
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args, String curs, Integer curn) {
+        return new ArrayList<>();
     }
     
     protected static boolean soloJugador(CommandSender p, Boolean message) {

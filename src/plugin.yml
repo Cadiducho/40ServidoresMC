@@ -12,4 +12,4 @@ commands:
         aliases: [actualizar40, upd40]
     reload40:
         description: Comando para recargar el plugin
-        aliases: [recargar40, config40, load40]
+        aliases: [recargar40, config40]
