@@ -20,6 +20,7 @@ public class CommandManager implements TabCompleter {
 
     public static List<ICommandBase> cmds = new ArrayList<>();
     public static CommandManager managerCmds;
+    public static BukkitPlugin plugin = BukkitPlugin.instance;
 
     public static void load() {
         cmds.add(new ReloadCMD());
@@ -52,6 +53,7 @@ public class CommandManager implements TabCompleter {
                     break;
                 }
                 cmdr.run(sender, label, args);
+                break;
             }
         }
     }

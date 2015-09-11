@@ -1,6 +1,7 @@
 package com.cadiducho.cservidoresmc.bukkit.cmd;
 
 import com.cadiducho.cservidoresmc.bukkit.util.Util;
+import java.util.Arrays;
 import java.util.logging.Level;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ import org.json.simple.parser.JSONParser;
 public class StatsCMD extends CommandBase {
     
     public StatsCMD() {
-        super("stats40", "40servidores.stats", null);
+        super("stats40", "40servidores.stats", Arrays.asList());
     }
 
     private static final JSONParser jsonParser = new JSONParser();
@@ -27,7 +28,7 @@ public class StatsCMD extends CommandBase {
         final Player p = (Player)sender;
         
         try {
-            String url = Util.readUrl("http://40servidoresmc.es/api2.php?estadisticas=1&clave="+plugin.getConfig().getString("40servidoresMC.clave"));
+            String url = Util.readUrl("http://40servidoresmc.es/api2.php?estadisticas=1&clave="+plugin.getConfig().getString("clave"));
             Object parsedData = jsonParser.parse(url);
             
             if (parsedData instanceof JSONObject) {

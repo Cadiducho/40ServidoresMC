@@ -39,7 +39,7 @@ public class Updater {
                 } else {
                     if (jsonData.containsKey(versionMinecraft)) {
                         JSONObject array = (JSONObject) jsonData.get(versionMinecraft);
-                        String ultimaVersion = (String) array.get("lastVersion");
+                        String ultimaVersion = ""+ array.get("lastVersion");
                         if (versionInstalada.matches(ultimaVersion)) {
                             a = "Versión actualizada";
                         } else {

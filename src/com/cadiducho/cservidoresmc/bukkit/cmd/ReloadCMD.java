@@ -19,10 +19,10 @@ public class ReloadCMD extends CommandBase {
         if (!perm(sender, getPermission(), true)) return;
         
         plugin.reloadConfig();
-        plugin.sendMessage("&aConfiguración recargada correctamente\n&"
-            +plugin.getTag()+"aFuncionando versión" + plugin.getPluginVersion(), sender);
+        plugin.sendMessage("&aConfiguración recargada correctamente", sender);
+        plugin.sendMessage("&aFuncionando la versión " + plugin.getPluginVersion(), sender);
           
-        System.out.println("["+ plugin.getName() +"] Configuracion recargada");
+        plugin.log("Configuracion recargada");
     }
     
 }

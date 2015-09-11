@@ -54,7 +54,7 @@ public class BukkitPlugin extends JavaPlugin {
         /*
          * Finalizar...
          */
-        updater = new Updater(this, this.getPluginVersion(), this.getServer().getVersion().split(":")[1]);
+        updater = new Updater(this, this.getPluginVersion(), this.getServer().getBukkitVersion().split("-")[0]);
         debugLog("Checkeando nuevas versiones...");
         String actualizacion = updater.checkearVersion();
         if (actualizacion != null) {
@@ -87,7 +87,7 @@ public class BukkitPlugin extends JavaPlugin {
         
         if (comandosCustom) {
             try {
-                listaComandos = this.getConfig().getStringList("comandosCustom.comandos");
+                listaComandos = this.getConfig().getStringList("comandosCustom");
             } catch (NullPointerException e) {
                 log(Level.WARNING, "No se ha podido cargar los premios de comandos customizados! (Error Config)");
                 comandosCustom = false;

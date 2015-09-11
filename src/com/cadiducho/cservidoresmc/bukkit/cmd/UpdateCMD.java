@@ -22,7 +22,7 @@ public class UpdateCMD extends CommandBase {
         String act = plugin.getUpdater().checkearVersion();
         if (act != null) {
             sender.sendMessage(plugin.getMetodos().colorizar(plugin.getTag()+"&a"+act));
-            System.out.println("["+ plugin.getName() +"] Version: " + act);
+            plugin.log("Updater: " + act);
         }
     }
     
