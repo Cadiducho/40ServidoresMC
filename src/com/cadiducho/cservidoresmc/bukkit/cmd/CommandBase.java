@@ -5,6 +5,8 @@ package com.cadiducho.cservidoresmc.bukkit.cmd;
  * @author Cadiducho. Framework de comandos de Meriland.es
  */
 
+import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
+import com.cadiducho.cservidoresmc.bukkit.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.command.Command;
@@ -17,6 +19,8 @@ public abstract class CommandBase implements ICommandBase {
     private final transient String name;
     private final transient String perm;
     private final transient List<String> aliases;
+    protected static transient BukkitPlugin plugin = BukkitPlugin.getInstance();
+    protected static transient Util metodos = BukkitPlugin.getInstance().getMetodos();
       
     protected CommandBase(final String name, final String perm, final List<String> aliases) {
         this.name = name;
@@ -44,6 +48,11 @@ public abstract class CommandBase implements ICommandBase {
         run((CommandSender) sender, label, args);
     }
     
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args, String curs, Integer curn) {
+        return new ArrayList<>();
+    }
+    
     protected static boolean perm(CommandSender p, String perm, Boolean message) {
         if (!(p instanceof Player)) {
             return true;
@@ -61,11 +70,6 @@ public abstract class CommandBase implements ICommandBase {
             return true;
         }
         return p.hasPermission(perm);    
-    }
-    
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args, String curs, Integer curn) {
-        return new ArrayList<>();
     }
     
     protected static boolean soloJugador(CommandSender p, Boolean message) {

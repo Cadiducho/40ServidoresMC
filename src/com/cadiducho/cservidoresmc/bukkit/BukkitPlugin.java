@@ -1,8 +1,5 @@
 package com.cadiducho.cservidoresmc.bukkit;
 
-import com.cadiducho.cservidoresmc.bukkit.cmd.ReloadCMD;
-import com.cadiducho.cservidoresmc.bukkit.cmd.UpdateCMD;
-import com.cadiducho.cservidoresmc.bukkit.cmd.VoteCMD;
 import com.cadiducho.cservidoresmc.bukkit.util.Util;
 import com.cadiducho.cservidoresmc.bukkit.util.Updater;
 

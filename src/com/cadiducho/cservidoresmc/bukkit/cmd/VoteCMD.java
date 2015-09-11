@@ -23,6 +23,9 @@ public class VoteCMD extends CommandBase {
 
     @Override
     public void run(CommandSender sender, String label, String[] args) {
+        if (!perm(sender, getPermission(), true)) return;
+        if (!soloJugador(sender, true)) return;
+        
         try {
             String url = Util.readUrl("http://40servidoresmc.es/api2.php?nombre="+sender.getName()+"&clave="+plugin.getConfig().getString("clave"));
             Object parsedData = jsonParser.parse(url);

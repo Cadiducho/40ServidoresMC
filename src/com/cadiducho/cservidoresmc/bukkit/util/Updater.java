@@ -14,7 +14,7 @@ public class Updater {
     String a, b, c;
     private static String versionInstalada, versionMinecraft;
     public static BukkitPlugin plugin;
-    private final String readurl = "https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/master/etc/v2.json"; //TODO Mantener ruta actualizada
+    private final String readurl = "https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/2.0/etc/v2.json"; //TODO Mantener ruta actualizada
     private static final JSONParser jsonParser = new JSONParser();
 
     public Updater(BukkitPlugin instance, String vInstalada, String vMinecraft) {

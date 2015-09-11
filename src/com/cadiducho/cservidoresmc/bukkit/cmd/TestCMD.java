@@ -15,6 +15,7 @@ public class TestCMD extends CommandBase {
     @Override
     public void run(CommandSender sender, String label, String[] args) {
         if (!perm(sender, getPermission(), true)) return;
+        if (!soloJugador(sender, true)) return;
         
         plugin.sendMessage("&bPlataforma de test para 40ServidoresMC:", sender);
         sender.sendMessage("");

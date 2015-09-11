@@ -32,17 +32,17 @@ public class CommandManager implements TabCompleter {
         //
         
         for (ICommandBase cmd : cmds) {
-            if (Bukkit.getPluginCommand("40servidoresmc:" + cmd.getName()) == null) {
+            if (Bukkit.getPluginCommand("40ServidoresMC:" + cmd.getName()) == null) {
                 BukkitPlugin.getInstance().log(Level.WARNING, "Error al cargar el comando: " + cmd.getName());
                 continue;
             }
-            Bukkit.getPluginCommand("40servidoresmc:" + cmd.getName()).setTabCompleter(managerCmds);
+            Bukkit.getPluginCommand("40ServidoresMC:" + cmd.getName()).setTabCompleter(managerCmds);
         }
     }
 
     public static void onCmd(final CommandSender sender, Command cmd, String label, final String[] args) {
-        if (label.startsWith("40servidoresmc:")) {
-            label = label.replaceFirst("40servidoresmc:", "");
+        if (label.startsWith("40ServidoresMC:")) {
+            label = label.replaceFirst("40ServidoresMC:", "");
         }
         for (ICommandBase cmdr : cmds) {
             if (label.equals(cmdr.getName()) || cmdr.getAliases().contains(label)) {
@@ -59,8 +59,8 @@ public class CommandManager implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
         List<String> rtrn = null;
-        if (label.startsWith("40servidoresmc:")) {
-            label = label.replaceFirst("40servidoresmc:", "");
+        if (label.startsWith("40ServidoresMC:")) {
+            label = label.replaceFirst("40ServidoresMC:", "");
         }
         /*
         * Auto Complete normal para cada comando si está declarado
