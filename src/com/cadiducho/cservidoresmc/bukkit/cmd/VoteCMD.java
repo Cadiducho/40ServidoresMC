@@ -44,6 +44,9 @@ public class VoteCMD extends CommandBase {
                             String comando = cmds.replace("{0}", sender.getName());
                             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), comando);
                         }
+                        if (plugin.getConfig().getBoolean("broadcast.activado")) {
+                            plugin.getServer().broadcastMessage(plugin.getConfig().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName()));
+                        }
                         break;
                     case 2:
                         plugin.sendMessage("&aGracias por votar, pero ya has obtenido tu premio!", sender);

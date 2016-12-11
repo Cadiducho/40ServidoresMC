@@ -38,17 +38,17 @@ public class BukkitPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         debugLog("Modo Debug activado en el plugin");
+        
         /*
          * Generar y cargar Config.yml
          */
         debugLog("Cargando configuración...");
         cargarConfig();
+        
         /*
          * Comandos y eventos
          */
-        PluginManager pluginManager = this.getServer().getPluginManager();
         debugLog("Registrando comandos y eventos...");
-        
         CommandManager.load();
         
         /*
