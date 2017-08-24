@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import org.bukkit.command.CommandSender;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import sun.plugin.com.Utils;
 
 /**
  *
@@ -45,7 +46,7 @@ public class VoteCMD extends CommandBase {
                             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), comando);
                         }
                         if (plugin.getConfig().getBoolean("broadcast.activado")) {
-                            plugin.getServer().broadcastMessage(plugin.getConfig().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName()));
+                            plugin.getServer().broadcastMessage(metodos.colorizar(plugin.getConfig().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName())));
                         }
                         break;
                     case 2:
