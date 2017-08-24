@@ -59,5 +59,10 @@
         "lastVersion" : 2.1,
         "lastDownload" : "https://github.com/Cadiducho/40ServidoresMC/releases/download/v2.1/40ServidoresMC-2.1.jar",
         "cambiosBreves" : "Arreglado Broadcast, versiones modernas de MC"
+    },
+    "1.12": {
+        "lastVersion" : 2.1,
+        "lastDownload" : "https://github.com/Cadiducho/40ServidoresMC/releases/download/v2.1/40ServidoresMC-2.1.jar",
+        "cambiosBreves" : "Arreglado Broadcast, versiones modernas de MC"
     }
 }
