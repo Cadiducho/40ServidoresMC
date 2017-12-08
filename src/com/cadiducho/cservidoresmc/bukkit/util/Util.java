@@ -1,8 +1,8 @@
 package com.cadiducho.cservidoresmc.bukkit.util;
 
 import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
-import java.io.BufferedReader;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -78,28 +78,23 @@ public class Util {
 		replace("&r", ChatColor.RESET + "");
 	}
     
-    public static String readUrl(String urlString) throws Exception {
-        URL url = new URL(urlString);
-        HttpURLConnection request1 = (HttpURLConnection) url.openConnection();
-        request1.setRequestMethod("GET");
-        request1.setReadTimeout(plugin.getConfig().getInt("readTimeOut"));
-        request1.connect();
-        InputStream is = request1.getInputStream();
-        BufferedReader bf_reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-        String line = null;
-        try {
-            while ((line = bf_reader.readLine()) != null) {
-                sb.append(line).append("\n");
-            }
-        } catch (IOException e) {
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-            }
+    public static String readUrl(String urlString) throws IOException {
+        URL obj = new URL(urlString);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        con.setRequestMethod("GET");
+        con.setReadTimeout(plugin.getConfig().getInt("readTimeOut"));
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuilder response = new StringBuilder();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
         }
-        return sb.toString();
+        in.close();
+        
+        return response.toString();
     }
-    
+
 }
