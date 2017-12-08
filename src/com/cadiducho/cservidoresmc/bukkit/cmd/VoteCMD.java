@@ -1,18 +1,20 @@
 package com.cadiducho.cservidoresmc.bukkit.cmd;
 
 import com.cadiducho.cservidoresmc.bukkit.util.Util;
+import java.io.IOException;
 import org.bukkit.command.CommandSender;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.util.Arrays;
 import java.util.logging.Level;
+import org.bukkit.command.CommandException;
+import org.json.simple.parser.ParseException;
 
 /**
- *
+ * Comando para votar
  * @author Cadiducho
  */
-
 public class VoteCMD extends CommandBase {
       
     public VoteCMD() {
@@ -36,14 +38,14 @@ public class VoteCMD extends CommandBase {
                 
                 switch (status) {
                     case 0:
-                        plugin.sendMessage("&6No has votado hoy! Puedes hacerlo en &a"+web, sender);
+                        plugin.sendMessage("&6No has votado hoy! Puedes hacerlo en &a" + web, sender);
                         break;
                     case 1:
                         plugin.sendMessage(plugin.getConfig().getString("mensaje"), sender);
-                        for (String cmds : plugin.listaComandos) {
-                            String comando = cmds.replace("{0}", sender.getName());
-                            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), comando);
-                        }
+                        plugin.listaComandos.stream()
+                                .map(cmds -> cmds.replace("{0}", sender.getName()))
+                                .forEach(comando -> plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), comando));
+                        
                         if (plugin.getConfig().getBoolean("broadcast.activado")) {
                             plugin.getServer().broadcastMessage(metodos.colorizar(plugin.getConfig().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName())));
                         }
@@ -59,9 +61,9 @@ public class VoteCMD extends CommandBase {
                         break;
                 }
             }
-        } catch (Exception ex) {
-            sender.sendMessage("&cHa ocurrido una excepción. Revisa la consola o avisa a un administrador");
-            plugin.log(Level.SEVERE, "Excepción obteniendo estadisticas: "+ex.toString());
+        } catch (IOException | CommandException | ParseException ex) {
+            sender.sendMessage("&cHa ocurrido una excepción. Avisa a un administrador");
+            plugin.log(Level.SEVERE, "Excepción intentando votar: " + ex.toString());
         }
     }
     
