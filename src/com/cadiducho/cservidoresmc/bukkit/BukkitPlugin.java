@@ -56,12 +56,7 @@ public class BukkitPlugin extends JavaPlugin {
          */
         updater = new Updater(this, this.getPluginVersion(), this.getServer().getBukkitVersion().split("-")[0]);
         debugLog("Checkeando nuevas versiones...");
-        String actualizacion = updater.checkearVersion();
-        if (actualizacion != null) {
-            if (!actualizacion.equalsIgnoreCase("Versión actualizada")) { 
-                log(actualizacion);
-            }
-        }
+        updater.checkearVersion(null, true);
         log("Plugin 40ServidoresMC v"+this.getPluginVersion()+" cargado completamente");
     }
     
