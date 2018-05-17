@@ -4,7 +4,6 @@ import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
 import java.util.Optional;
 import org.bukkit.command.CommandSender;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
  
 /**
  * Clase para comprobar las actualizaciones a través de Github
@@ -15,7 +14,6 @@ public class Updater {
     private static String versionInstalada, versionMinecraft;
     public static BukkitPlugin plugin;
     private final String readurl = "https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/2.0/etc/v2.json"; //TODO Mantener ruta actualizada
-    private static final JSONParser jsonParser = new JSONParser();
 
     public Updater(BukkitPlugin instance, String vInstalada, String vMinecraft) {
         plugin = instance;
@@ -47,7 +45,7 @@ public class Updater {
             JSONObject jsonData = (JSONObject) response.getResult();
             boolean online = (boolean) jsonData.get("online");
             if (!online) {
-                plugin.log(DISABLED);
+                if (boot) plugin.log(DISABLED);
                 sender.ifPresent(s -> plugin.sendMessage(DISABLED, s));
             } else {
                 if (jsonData.containsKey(versionMinecraft)) {
@@ -59,12 +57,12 @@ public class Updater {
                     } else {
                         String urlDescarga = (String) array.get("lastDownload");
                         String changelog = (String) array.get("cambiosBreves");
-                        String str = String.format(NEWVERSION, ultimaVersion, changelog, urlDescarga);
-                        plugin.log(str);
-                        sender.ifPresent(s -> plugin.sendMessage(NEWVERSION, s));
+                        String versionParsed = String.format(NEWVERSION, ultimaVersion, changelog, urlDescarga);
+                        if (boot) plugin.log(versionParsed);
+                        sender.ifPresent(s -> plugin.sendMessage(versionParsed, s));
                     }
                 } else {
-                    plugin.log(NOVERSION);
+                    if (boot) plugin.log(NOVERSION);
                     sender.ifPresent(s -> plugin.sendMessage(NOVERSION, s));
                 }
             }
