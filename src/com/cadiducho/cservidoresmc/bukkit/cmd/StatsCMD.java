@@ -10,7 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
- *
+ * Comando para obtener las estadísticas de tu servidor en 40ServidoresMC
  * @author Cadiducho
  */
 public class StatsCMD extends CommandBase {
@@ -25,7 +25,7 @@ public class StatsCMD extends CommandBase {
      
         final Player p = (Player) sender;
 
-        Util.readUrl("http://40servidoresmc.es/api2.php?estadisticas=1&clave=" + plugin.getConfig().getString("clave"), (ApiResponse response) -> {
+        Util.readUrl("https://40servidoresmc.es/api2.php?estadisticas=1&clave=" + plugin.getConfig().getString("clave"), (ApiResponse response) -> {
             if (response.getException().isPresent()) {
                 plugin.sendMessage("&cHa ocurrido una excepción. Revisa la consola o avisa a un administrador", sender);
                 plugin.log(Level.SEVERE, "Excepción obteniendo estadisticas: " + response.getException().get().getMessage());
@@ -33,6 +33,11 @@ public class StatsCMD extends CommandBase {
             }
             
             JSONObject jsonData = response.getResult();
+            if (jsonData.get("nombre") == null) { //clave mal configurada
+                plugin.sendMessage("&cClave incorrecta. Entra en &bhttps://40servidoresmc.es/miservidor.php &cy cambia esta.", sender);
+                return;
+            }
+            
             p.sendMessage(plugin.getMetodos().colorizar("&9======= &7" + jsonData.get("nombre") + " &festá en el TOP &a" + jsonData.get("puesto") + " &9======="));
             plugin.sendMessage("&bVotos hoy: &6" + jsonData.get("votoshoy"), p);
             plugin.sendMessage("&bVotos premiados hoy: &6" + jsonData.get("votoshoypremiados"), p);

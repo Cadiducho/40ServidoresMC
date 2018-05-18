@@ -18,7 +18,7 @@ public class VoteCMD extends CommandBase {
     public VoteCMD() {
         super("voto40", "40servidores.voto", Arrays.asList("votar40", "vote40", "mivoto40"));
     }
-
+    
     @Override
     public void run(CommandSender sender, String label, String[] args) {
         if (!perm(sender, getPermission(), true)) {
@@ -28,7 +28,7 @@ public class VoteCMD extends CommandBase {
             return;
         }
 
-        Util.readUrl("http://40servidoresmc.es/api2.php?nombre=" + sender.getName() + "&clave=" + plugin.getConfig().getString("clave"), (ApiResponse response) -> {
+        Util.readUrl("https://40servidoresmc.es/api2.php?nombre=" + sender.getName() + "&clave=" + plugin.getConfig().getString("clave"), (ApiResponse response) -> {
             if (response.getException().isPresent()) {
                 sender.sendMessage("&cHa ocurrido una excepción. Avisa a un administrador");
                 plugin.log(Level.SEVERE, "Excepción intentando votar: " + response.getException().get().toString());
@@ -38,7 +38,7 @@ public class VoteCMD extends CommandBase {
             JSONObject jsonData = response.getResult();
             String web = (String) jsonData.get("web");
             int status = (int) ((long) jsonData.get("status"));
-
+            
             switch (status) {
                 case 0:
                     plugin.sendMessage("&6No has votado hoy! Puedes hacerlo en &a" + web, sender);
@@ -57,7 +57,7 @@ public class VoteCMD extends CommandBase {
                     plugin.sendMessage("&aGracias por votar, pero ya has obtenido tu premio!", sender);
                     break;
                 case 3:
-                    plugin.sendMessage("&cClave incorrecta. Entra en &bhttp://40servidoresmc.es/miservidor.php &cy cambia esta.", sender);
+                    plugin.sendMessage("&cClave incorrecta. Entra en &bhttps://40servidoresmc.es/miservidor.php &cy cambia esta.", sender);
                     break;
                 default:
                     plugin.sendMessage("&7Ha ocurrido un error. Prueba más tarde o avisa a un adminsitrador", sender);

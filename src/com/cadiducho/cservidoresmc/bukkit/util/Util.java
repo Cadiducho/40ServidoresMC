@@ -15,7 +15,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /**
- *
+ * Clase con utilidades
  * @author Cadiducho
  */
 public class Util {
@@ -54,6 +54,11 @@ public class Util {
                 replace("&r", ChatColor.RESET + "");
     }
 
+    /**
+     * Leer una URL en un hilo asíncrono
+     * @param urlString URL a leer
+     * @param callback Callback que se ejecutará en hilo principal
+     */
     public static void readUrl(final String urlString, final ApiCallback callback) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             ApiResponse result = new ApiResponse();

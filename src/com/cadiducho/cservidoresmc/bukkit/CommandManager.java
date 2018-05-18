@@ -13,14 +13,14 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 /**
- *
- * @author Cadiducho. Framework de comandos de Meriland.es
+ * Framework de comandos de Meriland.es
+ * @author Cadiducho
  */
 public class CommandManager implements TabCompleter {
 
-    public static List<ICommandBase> cmds = new ArrayList<>();
+    public static List<CommandBase> cmds = new ArrayList<>();
     public static CommandManager managerCmds;
-    public static BukkitPlugin plugin = BukkitPlugin.instance;
+    public static BukkitPlugin plugin = BukkitPlugin.get();
 
     public static void load() {
         cmds.add(new ReloadCMD());
@@ -32,9 +32,9 @@ public class CommandManager implements TabCompleter {
         managerCmds = new CommandManager();
         //
         
-        for (ICommandBase cmd : cmds) {
+        for (CommandBase cmd : cmds) {
             if (Bukkit.getPluginCommand("40ServidoresMC:" + cmd.getName()) == null) {
-                BukkitPlugin.getInstance().log(Level.WARNING, "Error al cargar el comando: " + cmd.getName());
+                BukkitPlugin.get().log(Level.WARNING, "Error al cargar el comando: " + cmd.getName());
                 continue;
             }
             Bukkit.getPluginCommand("40ServidoresMC:" + cmd.getName()).setTabCompleter(managerCmds);
@@ -45,7 +45,7 @@ public class CommandManager implements TabCompleter {
         if (label.startsWith("40ServidoresMC:")) {
             label = label.replaceFirst("40ServidoresMC:", "");
         }
-        for (ICommandBase cmdr : cmds) {
+        for (CommandBase cmdr : cmds) {
             if (label.equals(cmdr.getName()) || cmdr.getAliases().contains(label)) {
                 if (sender instanceof ConsoleCommandSender) {
                     ConsoleCommandSender cs = (ConsoleCommandSender) sender;
@@ -67,7 +67,7 @@ public class CommandManager implements TabCompleter {
         /*
         * Auto Complete normal para cada comando si está declarado
         */
-        for (ICommandBase cmdr : cmds) {
+        for (CommandBase cmdr : cmds) {
             if (cmdr.getName().equals(label) || cmdr.getAliases().contains(label)) {
                 try {
                     if (!sender.hasPermission(cmdr.getPermission())) {
@@ -75,7 +75,7 @@ public class CommandManager implements TabCompleter {
                     }
                     rtrn = cmdr.onTabComplete(sender, cmd, label, args, args[args.length - 1], args.length - 1);
                 } catch (Exception ex) {
-                    BukkitPlugin.getInstance().log("Fallo al autocompletar " + label);
+                    BukkitPlugin.get().log("Fallo al autocompletar " + label);
                 }
                 break;
             }

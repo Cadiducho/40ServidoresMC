@@ -11,16 +11,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- *
- * @author Cadiducho
- * 
  * Implementación para Bukkit, Spigot y Glowstone
+ * @author Cadiducho
  */
-
 public class BukkitPlugin extends JavaPlugin {
     
     private final Util met = new Util(this);
@@ -32,7 +28,11 @@ public class BukkitPlugin extends JavaPlugin {
     public boolean comandosCustom = true;
     public List<String> listaComandos;
     
-    public static BukkitPlugin instance;
+    private static BukkitPlugin instance;
+    
+    public static BukkitPlugin get() {
+        return instance;
+    }
     
     @Override
     public void onEnable() {
@@ -78,16 +78,23 @@ public class BukkitPlugin extends JavaPlugin {
             log(Level.SEVERE, "Tu configuración es de una versión más antigua a la de este plugin!"
                 + "Corrigelo o podrás tener errores..." );
         }
-        comandosCustom = this.getConfig().getBoolean("comandosCustom.activado", comandosCustom);
+        reloadComandosCustom();      
+    }
+    
+    /**
+     * Recargar el array de comandos custom desde la config
+     */
+    public void reloadComandosCustom() {
+        comandosCustom = getConfig().getBoolean("comandosCustom.activado", comandosCustom);
         
         if (comandosCustom) {
             try {
-                listaComandos = this.getConfig().getStringList("comandosCustom");
+                listaComandos = getConfig().getStringList("comandosCustom");
             } catch (NullPointerException e) {
                 log(Level.WARNING, "No se ha podido cargar los premios de comandos customizados! (Error Config)");
                 comandosCustom = false;
             }    
-        }        
+        }  
     }
     
     @Override
@@ -139,9 +146,4 @@ public class BukkitPlugin extends JavaPlugin {
     public Updater getUpdater() {
         return this.updater;
     }
-
-    public static BukkitPlugin getInstance() {
-        return BukkitPlugin.instance;
-    }
-
 }

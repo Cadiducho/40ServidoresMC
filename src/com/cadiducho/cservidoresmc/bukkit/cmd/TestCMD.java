@@ -4,7 +4,7 @@ import java.util.Arrays;
 import org.bukkit.command.CommandSender;
 
 /**
- *
+ * Comando para probar las recompensas sin votar realmente
  * @author Cadiducho
  */
 public class TestCMD extends CommandBase {

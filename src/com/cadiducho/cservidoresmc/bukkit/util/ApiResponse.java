@@ -4,7 +4,7 @@ import java.util.Optional;
 import org.json.simple.JSONObject;
 
 /**
- *
+ * Objeto que contine la respuesta de la API
  * @author Cadiducho
  */
 public class ApiResponse {
