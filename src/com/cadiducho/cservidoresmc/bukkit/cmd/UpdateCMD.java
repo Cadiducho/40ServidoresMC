@@ -19,11 +19,6 @@ public class UpdateCMD extends CommandBase {
     public void run(CommandSender sender, String label, String[] args) {
         if (!perm(sender, getPermission(), true)) return;
         
-        String act = plugin.getUpdater().checkearVersion();
-        if (act != null) {
-            sender.sendMessage(plugin.getMetodos().colorizar(plugin.getTag()+"&a"+act));
-            plugin.log("Updater: " + act);
-        }
+        plugin.getUpdater().checkearVersion(sender, false);
     }
-    
 }
