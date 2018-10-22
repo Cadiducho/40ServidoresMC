@@ -41,8 +41,8 @@ public class CommandManager implements TabCompleter {
     }
 
     public static void onCmd(final CommandSender sender, Command cmd, String label, final String[] args) {
-        if (label.startsWith("40ServidoresMC:")) {
-            label = label.replaceFirst("40ServidoresMC:", "");
+        if (label.startsWith(("40ServidoresMC:").toLowerCase())) {
+            label = label.substring(("40ServidoresMC:").length());
         }
         for (CommandBase cmdr : cmds) {
             if (label.equals(cmdr.getName()) || cmdr.getAliases().contains(label)) {
