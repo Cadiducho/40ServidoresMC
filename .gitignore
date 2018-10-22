@@ -7,3 +7,6 @@ nbproject/
 #Maven
 /target/
 target/ 
+\.idea/
+
+*.iml

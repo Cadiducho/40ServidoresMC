@@ -1,9 +1,6 @@
 package com.cadiducho.cservidoresmc.bukkit;
 
 import com.cadiducho.cservidoresmc.bukkit.cmd.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -12,14 +9,17 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+
 /**
  * Framework de comandos de Meriland.es
  * @author Cadiducho
  */
 public class CommandManager implements TabCompleter {
 
-    public static List<CommandBase> cmds = new ArrayList<>();
-    public static CommandManager managerCmds;
+    private static final List<CommandBase> cmds = new ArrayList<>();
     public static BukkitPlugin plugin = BukkitPlugin.get();
 
     public static void load() {
@@ -28,9 +28,8 @@ public class CommandManager implements TabCompleter {
         cmds.add(new TestCMD());
         cmds.add(new UpdateCMD());
         cmds.add(new VoteCMD());
-        //
-        managerCmds = new CommandManager();
-        //
+
+        CommandManager managerCmds = new CommandManager();
         
         for (CommandBase cmd : cmds) {
             if (Bukkit.getPluginCommand("40ServidoresMC:" + cmd.getName()) == null) {
@@ -42,8 +41,8 @@ public class CommandManager implements TabCompleter {
     }
 
     public static void onCmd(final CommandSender sender, Command cmd, String label, final String[] args) {
-        if (label.startsWith("40ServidoresMC:")) {
-            label = label.replaceFirst("40ServidoresMC:", "");
+        if (label.startsWith(("40ServidoresMC:").toLowerCase())) {
+            label = label.substring(("40ServidoresMC:").length());
         }
         for (CommandBase cmdr : cmds) {
             if (label.equals(cmdr.getName()) || cmdr.getAliases().contains(label)) {
@@ -80,21 +79,16 @@ public class CommandManager implements TabCompleter {
                 break;
             }
         }
-        /*
-        * Si el autocomplete es null, que devuelva jugadores
-        */
+
+        // Si el autocomplete es null, que devuelva jugadores
         if (rtrn == null) {
             rtrn = new ArrayList<>();
             for (Player p : Bukkit.getOnlinePlayers()) {
                 rtrn.add(p.getName());
             }
         }
-        /*
-        * Autocomplete para cada argumento
-        */
-        ArrayList<String> rtrn2 = new ArrayList<>();
-        rtrn2.addAll(rtrn);
-        rtrn = rtrn2;
+
+        // Autocomplete para cada argumento
         if (!(args[args.length - 1].isEmpty() || args[args.length - 1] == null)) {
             List<String> remv = new ArrayList<>();
             for (String s : rtrn) {

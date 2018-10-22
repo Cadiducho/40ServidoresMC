@@ -2,12 +2,13 @@ package com.cadiducho.cservidoresmc.bukkit.cmd;
 
 import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
 import com.cadiducho.cservidoresmc.bukkit.util.Util;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Framework de comandos de Meriland.es
@@ -18,8 +19,8 @@ public abstract class CommandBase {
     private final transient String name;
     private final transient String perm;
     private final transient List<String> aliases;
-    protected static transient BukkitPlugin plugin = BukkitPlugin.get();
-    protected static transient Util metodos = BukkitPlugin.get().getMetodos();
+    protected static final transient BukkitPlugin plugin = BukkitPlugin.get();
+    protected static final transient Util metodos = BukkitPlugin.get().getMetodos();
       
     protected CommandBase(final String name, final String perm, final List<String> aliases) {
         this.name = name;
@@ -56,8 +57,8 @@ public abstract class CommandBase {
             return true;
         }
         Player pl = (Player) p;
-        Boolean hasperm = perm(pl, perm);
-        if (hasperm == false && message == true) {
+        boolean hasperm = perm(pl, perm);
+        if (!hasperm && message) {
             plugin.sendMessage("&cNo tienes permiso para usar este comando", pl);
         }
         return hasperm;
@@ -72,7 +73,7 @@ public abstract class CommandBase {
     
     protected static boolean soloJugador(CommandSender p, Boolean message) {
         if (!(p instanceof Player)) {
-            if (message == true) {
+            if (message) {
                 plugin.sendMessage("&cNo puedes usar este comando si no eres un jugador", p); 
             }
             return false;

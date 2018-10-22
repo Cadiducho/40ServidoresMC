@@ -11,5 +11,5 @@ public interface ApiCallback {
      * Código a ejecutar cuando se realice el callback
      * @param res {@link ApiResponse} de la API
      */
-    public void done(ApiResponse res);
+    void done(ApiResponse res);
 } 

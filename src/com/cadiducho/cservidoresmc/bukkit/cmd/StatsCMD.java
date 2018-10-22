@@ -2,12 +2,13 @@ package com.cadiducho.cservidoresmc.bukkit.cmd;
 
 import com.cadiducho.cservidoresmc.bukkit.util.ApiResponse;
 import com.cadiducho.cservidoresmc.bukkit.util.Util;
-import java.util.Arrays;
-import java.util.logging.Level;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import java.util.Collections;
+import java.util.logging.Level;
 
 /**
  * Comando para obtener las estadísticas de tu servidor en 40ServidoresMC
@@ -16,7 +17,7 @@ import org.json.simple.JSONObject;
 public class StatsCMD extends CommandBase {
     
     public StatsCMD() {
-        super("stats40", "40servidores.stats", Arrays.asList());
+        super("stats40", "40servidores.stats", Collections.emptyList());
     }
     
     @Override
@@ -44,14 +45,14 @@ public class StatsCMD extends CommandBase {
             plugin.sendMessage("&bVotos semanales: &6" + jsonData.get("votossemanales"), p);
             plugin.sendMessage("&bVotos premiados semanales: &6" + jsonData.get("votossemanalespremiados"), p);
             JSONArray array = (JSONArray) jsonData.get("ultimos20votos");
-            String usuarios = "";
+            StringBuilder usuarios = new StringBuilder();
             for (Object obj : array) {
                 JSONObject object = (JSONObject) obj;
                 String strellita = (Integer.parseInt((String) object.get("recompensado")) == 1) ? "&a" : "&c";
-                usuarios += (strellita + object.get("usuario") + "&6, ");
+                usuarios.append(strellita).append(object.get("usuario")).append("&6, ");
             }
-            usuarios = usuarios.substring(0, usuarios.length() - 2) + ".";
-            plugin.sendMessage("&bUltimos 20 votos: " + usuarios, p);
+            usuarios = new StringBuilder(usuarios.substring(0, usuarios.length() - 2) + ".");
+            plugin.sendMessage("&bÚltimos 20 votos: " + usuarios, p);
         });
     }
 }
