@@ -1,18 +1,17 @@
 package com.cadiducho.cservidoresmc.bukkit.util;
 
 import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import org.bukkit.Bukkit;
-
-import org.bukkit.ChatColor;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  * Clase con utilidades
@@ -88,9 +87,7 @@ public class Util {
                 result.setException(ex);
             }
 
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                callback.done(result);
-            });
+            Bukkit.getScheduler().runTask(plugin, () -> callback.done(result));
         });
     }
 

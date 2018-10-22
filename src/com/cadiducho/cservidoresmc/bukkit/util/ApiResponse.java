@@ -1,10 +1,11 @@
 package com.cadiducho.cservidoresmc.bukkit.util;
 
-import java.util.Optional;
 import org.json.simple.JSONObject;
 
+import java.util.Optional;
+
 /**
- * Objeto que contine la respuesta de la API
+ * Objeto que contiene la respuesta de la API
  * @author Cadiducho
  */
 public class ApiResponse {

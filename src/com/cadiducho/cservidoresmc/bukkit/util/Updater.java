@@ -1,9 +1,10 @@
 package com.cadiducho.cservidoresmc.bukkit.util;
 
 import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
-import java.util.Optional;
 import org.bukkit.command.CommandSender;
 import org.json.simple.JSONObject;
+
+import java.util.Optional;
  
 /**
  * Clase para comprobar las actualizaciones a través de Github
@@ -12,7 +13,7 @@ import org.json.simple.JSONObject;
 public class Updater {
 
     private static String versionInstalada, versionMinecraft;
-    public static BukkitPlugin plugin;
+    private static BukkitPlugin plugin;
     private final String readurl = "https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/2.0/etc/v2.json"; //TODO Mantener ruta actualizada
 
     public Updater(BukkitPlugin instance, String vInstalada, String vMinecraft) {
@@ -42,7 +43,7 @@ public class Updater {
                 plugin.debugLog("Causa: " + response.getException().get().getMessage());
             }
             
-            JSONObject jsonData = (JSONObject) response.getResult();
+            JSONObject jsonData = response.getResult();
             boolean online = (boolean) jsonData.get("online");
             if (!online) {
                 if (boot) plugin.log(DISABLED);

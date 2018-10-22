@@ -1,7 +1,8 @@
 package com.cadiducho.cservidoresmc.bukkit.cmd;
 
-import java.util.Arrays;
 import org.bukkit.command.CommandSender;
+
+import java.util.Collections;
 
 /**
  * Comando para probar las recompensas sin votar realmente
@@ -10,7 +11,7 @@ import org.bukkit.command.CommandSender;
 public class TestCMD extends CommandBase {
     
     public TestCMD() {
-        super("test40", "40servidores.test", Arrays.asList());
+        super("test40", "40servidores.test", Collections.emptyList());
     }
     
     @Override
