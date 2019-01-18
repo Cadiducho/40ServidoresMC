@@ -28,10 +28,11 @@ public class VoteCMD extends CommandBase {
             return;
         }
 
+        plugin.sendMessage("&7Obteniendo voto...", sender);
         Util.readUrl("https://40servidoresmc.es/api2.php?nombre=" + sender.getName() + "&clave=" + plugin.getConfig().getString("clave"), (ApiResponse response) -> {
             if (response.getException().isPresent()) {
-                sender.sendMessage("&cHa ocurrido una excepción. Avisa a un administrador");
-                plugin.log(Level.SEVERE, "Excepción intentando votar: " + response.getException().get().toString());
+                plugin.sendMessage("&cHa ocurrido una excepción. Avisa a un administrador", sender);
+                plugin.log(Level.SEVERE, "Excepción intentando votar: " + response.getException().get());
                 return;
             }
 
@@ -50,7 +51,8 @@ public class VoteCMD extends CommandBase {
                             .forEach(comando -> plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), comando));
 
                     if (plugin.getConfig().getBoolean("broadcast.activado")) {
-                        plugin.getServer().broadcastMessage(metodos.colorizar(plugin.getConfig().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName())));
+                        plugin.getServer().getOnlinePlayers()
+                                .forEach(p -> plugin.sendMessage(plugin.getConfig().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName()), p));
                     }
                     break;
                 case 2:

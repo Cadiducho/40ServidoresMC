@@ -3,7 +3,6 @@ package com.cadiducho.cservidoresmc.bukkit.cmd;
 import com.cadiducho.cservidoresmc.bukkit.util.ApiResponse;
 import com.cadiducho.cservidoresmc.bukkit.util.Util;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -23,8 +22,6 @@ public class StatsCMD extends CommandBase {
     @Override
     public void run(CommandSender sender, String label, String[] args) {
         if (!perm(sender, getPermission(), true)) return;
-     
-        final Player p = (Player) sender;
 
         Util.readUrl("https://40servidoresmc.es/api2.php?estadisticas=1&clave=" + plugin.getConfig().getString("clave"), (ApiResponse response) -> {
             if (response.getException().isPresent()) {
@@ -38,12 +35,12 @@ public class StatsCMD extends CommandBase {
                 plugin.sendMessage("&cClave incorrecta. Entra en &bhttps://40servidoresmc.es/miservidor.php &cy cambia esta.", sender);
                 return;
             }
-            
-            p.sendMessage(plugin.getMetodos().colorizar("&9======= &7" + jsonData.get("nombre") + " &festá en el TOP &a" + jsonData.get("puesto") + " &9======="));
-            plugin.sendMessage("&bVotos hoy: &6" + jsonData.get("votoshoy"), p);
-            plugin.sendMessage("&bVotos premiados hoy: &6" + jsonData.get("votoshoypremiados"), p);
-            plugin.sendMessage("&bVotos semanales: &6" + jsonData.get("votossemanales"), p);
-            plugin.sendMessage("&bVotos premiados semanales: &6" + jsonData.get("votossemanalespremiados"), p);
+
+            plugin.sendMessage("&9==> &7" + jsonData.get("nombre") + " &festá en el TOP &a" + jsonData.get("puesto"), sender);
+            plugin.sendMessage("&bVotos hoy: &6" + jsonData.get("votoshoy"), sender);
+            plugin.sendMessage("&bVotos premiados hoy: &6" + jsonData.get("votoshoypremiados"), sender);
+            plugin.sendMessage("&bVotos semanales: &6" + jsonData.get("votossemanales"), sender);
+            plugin.sendMessage("&bVotos premiados semanales: &6" + jsonData.get("votossemanalespremiados"), sender);
             JSONArray array = (JSONArray) jsonData.get("ultimos20votos");
             StringBuilder usuarios = new StringBuilder();
             for (Object obj : array) {
@@ -52,7 +49,7 @@ public class StatsCMD extends CommandBase {
                 usuarios.append(strellita).append(object.get("usuario")).append("&6, ");
             }
             usuarios = new StringBuilder(usuarios.substring(0, usuarios.length() - 2) + ".");
-            plugin.sendMessage("&bÚltimos 20 votos: " + usuarios, p);
+            plugin.sendMessage("&bÚltimos 20 votos: " + usuarios, sender);
         });
     }
 }
