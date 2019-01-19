@@ -38,7 +38,11 @@ public class BukkitPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         debugLog("Modo Debug activado en el plugin");
-        
+
+        if (CertificateUtil.getJavaVersion() == 8 && CertificateUtil.getJavaUpdate() < 101) { // si es Java 8_101 o menor
+            CertificateUtil.setUpCertificates();    // agregar al runtime los certificados de Let's Encrypt Auuthority para que SSL funcione de manera correcta con la API de la web
+        }
+
         /*
          * Generar y cargar Config.yml
          */
