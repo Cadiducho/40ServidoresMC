@@ -1,5 +1,6 @@
 package com.cadiducho.cservidoresmc.bukkit;
 
+import com.cadiducho.cservidoresmc.bukkit.util.MetricsLite;
 import com.cadiducho.cservidoresmc.bukkit.util.Updater;
 import com.cadiducho.cservidoresmc.bukkit.util.Util;
 import org.bukkit.ChatColor;
@@ -50,6 +51,7 @@ public class BukkitPlugin extends JavaPlugin {
         debugLog("Registrando comandos y eventos...");
         CommandManager.load();
         
+        MetricsLite metrics = new MetricsLite(instance);
         /*
          * Finalizar...
          */
