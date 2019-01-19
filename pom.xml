@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.cadiducho</groupId>
     <artifactId>40ServidoresMC</artifactId>
-    <version>2.4</version>
+    <version>2.5</version>
     <packaging>jar</packaging>
     <repositories>
         <repository>
@@ -19,6 +19,7 @@
             <version>1.13.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        
         <!-- Dependencias para el plugin -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>

@@ -1,7 +1,9 @@
 package com.cadiducho.cservidoresmc.bukkit;
 
+import com.cadiducho.cservidoresmc.bukkit.util.MetricsLite;
 import com.cadiducho.cservidoresmc.bukkit.util.Updater;
 import com.cadiducho.cservidoresmc.bukkit.util.Util;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,6 +51,7 @@ public class BukkitPlugin extends JavaPlugin {
         debugLog("Registrando comandos y eventos...");
         CommandManager.load();
         
+        MetricsLite metrics = new MetricsLite(instance);
         /*
          * Finalizar...
          */
@@ -57,7 +60,7 @@ public class BukkitPlugin extends JavaPlugin {
         updater.checkearVersion(null, true);
         log("Plugin 40ServidoresMC v" + getPluginVersion() + " cargado completamente");
     }
-    
+
     private void cargarConfig() {
         File file = new File(getDataFolder() + File.separator + "config.yml");
         if (!file.exists()) {
@@ -101,6 +104,7 @@ public class BukkitPlugin extends JavaPlugin {
         } catch (Exception ex) {
             log(Level.SEVERE, "Error al ejecutar el comando '" + label + Arrays.toString(args)+"'");
             debugLog(ex.getMessage());
+            if (ex.getCause() != null) debugLog(ex.getCause().getMessage());
         }
         return true;
     }
@@ -120,11 +124,11 @@ public class BukkitPlugin extends JavaPlugin {
     }
     
     public void log(Level l, String s){
-       getLogger().log(l, tag);
+       getLogger().log(l, s);
     }
     
     public void sendMessage(String str, CommandSender sender) {
-        sender.sendMessage(met.colorizar(tag + " " + str));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', tag + " " + str));
     }
     
     public Util getMetodos() {
