@@ -1,6 +1,7 @@
 package com.cadiducho.cservidoresmc.bukkit.cmd;
 
 import com.cadiducho.cservidoresmc.bukkit.util.ApiResponse;
+import com.cadiducho.cservidoresmc.bukkit.util.Cooldown;
 import com.cadiducho.cservidoresmc.bukkit.util.Util;
 import org.bukkit.command.CommandSender;
 import org.json.simple.JSONObject;
@@ -19,6 +20,8 @@ public class VoteCMD extends CommandBase {
         super("voto40", "40servidores.voto", Arrays.asList("votar40", "vote40", "mivoto40"));
     }
     
+    final Cooldown cooldown = new Cooldown(60);
+    
     @Override
     public void run(CommandSender sender, String label, String[] args) {
         if (!perm(sender, getPermission(), true)) {
@@ -27,7 +30,14 @@ public class VoteCMD extends CommandBase {
         if (!soloJugador(sender, true)) {
             return;
         }
-
+        
+        if (cooldown.isCoolingDown(sender)) {
+            plugin.sendMessage("&6No puedes ejecutar este comando tantas veces seguidas!", sender);
+            return;
+        }
+        
+        cooldown.setOnCooldown(sender);
+        
         plugin.sendMessage("&7Obteniendo voto...", sender);
         Util.readUrl("https://40servidoresmc.es/api2.php?nombre=" + sender.getName() + "&clave=" + plugin.getConfig().getString("clave"), (ApiResponse response) -> {
             if (response.getException().isPresent()) {
