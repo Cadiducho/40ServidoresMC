@@ -50,6 +50,8 @@ public class BukkitPlugin extends JavaPlugin {
          */
         debugLog("Registrando comandos y eventos...");
         CommandManager.load();
+
+        installPlaceholderAPI();
         
         MetricsLite metrics = new MetricsLite(instance);
         /*
@@ -95,6 +97,15 @@ public class BukkitPlugin extends JavaPlugin {
                 comandosCustom = false;
             }    
         }  
+    }
+
+    /**
+     * Comprobar si el plugin PlaceholderAPI está activo, y si es así registrar la extensión
+     */
+    private void installPlaceholderAPI() {
+        if (this.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new PlaceholderHook(this).register();
+        }
     }
     
     @Override
