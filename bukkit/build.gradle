@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+    id "io.freefair.lombok" version "5.3.0"
+}
+
+repositories {
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+}
+
+dependencies {
+    implementation project(':common')
+    implementation 'org.bstats:bstats-bukkit:2.2.1'
+    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+    compileOnly 'me.clip:placeholderapi:2.10.9'
+}
+
+shadowJar {
+    archiveBaseName.set(rootProject.name)
+    archiveClassifier.set('Bukkit')
+    archiveVersion.set(version)
+
+    relocate 'org.bstats', 'com.cadiducho.cservidoresmc.lib.bstats'
+}
+
+artifacts {
+    archives shadowJar
+}

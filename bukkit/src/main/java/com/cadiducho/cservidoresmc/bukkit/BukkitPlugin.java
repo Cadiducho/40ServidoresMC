@@ -1,8 +1,10 @@
 package com.cadiducho.cservidoresmc.bukkit;
 
-import com.cadiducho.cservidoresmc.bukkit.util.MetricsLite;
+import com.cadiducho.cservidoresmc.ApiClient;
 import com.cadiducho.cservidoresmc.bukkit.util.Updater;
-import com.cadiducho.cservidoresmc.bukkit.util.Util;
+import com.google.gson.Gson;
+import lombok.Getter;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,9 +20,9 @@ import java.util.logging.Level;
  * @author Cadiducho
  */
 public class BukkitPlugin extends JavaPlugin {
-    
-    private final Util met = new Util(this);
-    private Updater updater;
+
+    @Getter private ApiClient apiClient;
+    @Getter private Updater updater;
     
     private final String tag = "&8[&b40ServidoresMC&8]";
     private int configVer = 0;
@@ -38,7 +40,9 @@ public class BukkitPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         debugLog("Modo Debug activado en el plugin");
-        
+
+        apiClient = new ApiClient(new Gson());
+
         /*
          * Generar y cargar Config.yml
          */
@@ -53,7 +57,7 @@ public class BukkitPlugin extends JavaPlugin {
 
         installPlaceholderAPI();
         
-        MetricsLite metrics = new MetricsLite(instance);
+        Metrics metrics = new Metrics(instance, 3909);
         /*
          * Finalizar...
          */
@@ -142,19 +146,8 @@ public class BukkitPlugin extends JavaPlugin {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', tag + " " + str));
     }
     
-    public Util getMetodos() {
-        return this.met;
-    }
-    
     public String getPluginVersion(){
         return this.getDescription().getVersion();
     }
-    
-    public String getTag() {
-        return this.tag;     
-    }
-    
-    public Updater getUpdater() {
-        return this.updater;
-    }
+
 }

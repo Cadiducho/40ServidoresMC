@@ -1,7 +1,6 @@
 package com.cadiducho.cservidoresmc.bukkit.cmd;
 
 import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
-import com.cadiducho.cservidoresmc.bukkit.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -20,7 +19,6 @@ public abstract class CommandBase {
     private final transient String perm;
     private final transient List<String> aliases;
     protected static final transient BukkitPlugin plugin = BukkitPlugin.get();
-    protected static final transient Util metodos = BukkitPlugin.get().getMetodos();
       
     protected CommandBase(final String name, final String perm, final List<String> aliases) {
         this.name = name;

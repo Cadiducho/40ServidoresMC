@@ -2,8 +2,6 @@ package com.cadiducho.cservidoresmc.bukkit.util;
 
 import com.cadiducho.cservidoresmc.bukkit.BukkitPlugin;
 import org.bukkit.command.CommandSender;
-import org.json.simple.JSONObject;
-
 import java.util.Optional;
  
 /**
@@ -36,7 +34,8 @@ public class Updater {
     public void checkearVersion(CommandSender send, boolean boot) {
         plugin.debugLog("Buscando nueva versión...");
         Optional<CommandSender> sender = Optional.ofNullable(send);
-        Util.readUrl(readurl, (ApiResponse response) -> {
+        // ToDo: fixme
+        /*Util.readUrl(readurl, (ApiResponse response) -> {
             if (response.getException().isPresent()) {
                 plugin.log(ERROR);
                 sender.ifPresent(s -> plugin.sendMessage(ERROR, s));
@@ -67,7 +66,7 @@ public class Updater {
                     sender.ifPresent(s -> plugin.sendMessage(NOVERSION, s));
                 }
             }
-        });
+        });*/
     }
 
 }

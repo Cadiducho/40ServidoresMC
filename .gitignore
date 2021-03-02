@@ -1,12 +1,10 @@
-#Antiguo stuff de NB
-/nbproject/private/
-nbproject/
-/build/
-/dist/
-
-#Maven
-/target/
-target/ 
-\.idea/
-
+.gradle
+.idea
 *.iml
+
+/build/
+/bukkit/build
+/common/build
+/sponge/build
+/bungee/build
+

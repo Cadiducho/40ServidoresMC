@@ -1,6 +1,6 @@
 name: 40ServidoresMC
 main: com.cadiducho.cservidoresmc.bukkit.BukkitPlugin
-version: 2.6
+version: 3.0
 author: Cadiducho
 api-version: 1.13
 description: Enlace para servidores de la web 40ServidoresMC!

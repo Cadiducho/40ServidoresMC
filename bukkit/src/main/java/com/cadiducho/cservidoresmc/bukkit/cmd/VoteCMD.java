@@ -1,10 +1,10 @@
 package com.cadiducho.cservidoresmc.bukkit.cmd;
 
-import com.cadiducho.cservidoresmc.bukkit.util.ApiResponse;
-import com.cadiducho.cservidoresmc.bukkit.util.Cooldown;
-import com.cadiducho.cservidoresmc.bukkit.util.Util;
+import com.cadiducho.cservidoresmc.Cooldown;
+import com.cadiducho.cservidoresmc.model.VoteResponse;
+import com.cadiducho.cservidoresmc.model.VoteStatus;
+import com.google.gson.Gson;
 import org.bukkit.command.CommandSender;
-import org.json.simple.JSONObject;
 
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -31,50 +31,50 @@ public class VoteCMD extends CommandBase {
             return;
         }
         
-        if (cooldown.isCoolingDown(sender)) {
+        if (cooldown.isCoolingDown(sender.getName())) {
             plugin.sendMessage("&6No puedes ejecutar este comando tantas veces seguidas!", sender);
             return;
         }
         
-        cooldown.setOnCooldown(sender);
+        cooldown.setOnCooldown(sender.getName());
         
         plugin.sendMessage("&7Obteniendo voto...", sender);
-        Util.readUrl("https://40servidoresmc.es/api2.php?nombre=" + sender.getName() + "&clave=" + plugin.getConfig().getString("clave"), (ApiResponse response) -> {
-            if (response.getException().isPresent()) {
-                plugin.sendMessage("&cHa ocurrido una excepción. Avisa a un administrador", sender);
-                plugin.log(Level.SEVERE, "Excepción intentando votar: " + response.getException().get());
-                return;
-            }
+        plugin.getApiClient().validateVote(sender.getName()).thenAccept((VoteResponse voteResponse) -> {
+            System.out.println(new Gson().toJson(voteResponse));
+            String web = voteResponse.getWeb();
+            VoteStatus status = voteResponse.getStatus();
 
-            JSONObject jsonData = response.getResult();
-            String web = (String) jsonData.get("web");
-            int status = (int) ((long) jsonData.get("status"));
-            
             switch (status) {
-                case 0:
+                case NOT_VOTED:
                     plugin.sendMessage("&6No has votado hoy! Puedes hacerlo en &a" + web, sender);
                     break;
-                case 1:
+                case SUCCESS:
                     plugin.sendMessage(plugin.getConfig().getString("mensaje"), sender);
-                    plugin.listaComandos.stream()
-                            .map(cmds -> cmds.replace("{0}", sender.getName()))
-                            .forEach(comando -> plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), comando));
+                    plugin.getServer().getScheduler().runTask(plugin, () -> {
+                        plugin.listaComandos.stream()
+                                .map(cmds -> cmds.replace("{0}", sender.getName()))
+                                .forEach(comando -> plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), comando));
 
-                    if (plugin.getConfig().getBoolean("broadcast.activado")) {
-                        plugin.getServer().getOnlinePlayers()
-                                .forEach(p -> plugin.sendMessage(plugin.getConfig().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName()), p));
-                    }
+                        if (plugin.getConfig().getBoolean("broadcast.activado")) {
+                            plugin.getServer().getOnlinePlayers()
+                                    .forEach(p -> plugin.sendMessage(plugin.getConfig().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName()), p));
+                        }
+                    });
                     break;
-                case 2:
+                case ALREADY_VOTED:
                     plugin.sendMessage("&aGracias por votar, pero ya has obtenido tu premio!", sender);
                     break;
-                case 3:
+                case INVALID_kEY:
                     plugin.sendMessage("&cClave incorrecta. Entra en &bhttps://40servidoresmc.es/miservidor.php &cy cambia esta.", sender);
                     break;
                 default:
                     plugin.sendMessage("&7Ha ocurrido un error. Prueba más tarde o avisa a un adminsitrador", sender);
                     break;
             }
+        }).exceptionally(e -> {
+            plugin.sendMessage("&cHa ocurrido una excepción. Avisa a un administrador", sender);
+            plugin.log(Level.SEVERE, "Excepción intentando votar: " + e.getMessage());
+            return null;
         });
     }
 }

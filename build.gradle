@@ -1,0 +1,16 @@
+subprojects {
+    apply plugin: 'java'
+
+    group = 'com.cadiducho'
+    version = '3.0'
+    description = '40ServidoresMC'
+    java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+}
