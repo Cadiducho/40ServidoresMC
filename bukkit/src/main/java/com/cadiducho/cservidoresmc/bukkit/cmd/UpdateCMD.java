@@ -1,6 +1,9 @@
 package com.cadiducho.cservidoresmc.bukkit.cmd;
 
+import com.cadiducho.cservidoresmc.api.CSCommandSender;
+import com.cadiducho.cservidoresmc.bukkit.BukkitCommandSender;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 
 import java.util.Arrays;
 
@@ -18,7 +21,8 @@ public class UpdateCMD extends CommandBase {
     @Override
     public void run(CommandSender sender, String label, String[] args) {
         if (!perm(sender, getPermission(), true)) return;
-        
-        plugin.getUpdater().checkearVersion(sender, false);
+
+        final CSCommandSender csSender = new BukkitCommandSender(sender);
+        plugin.getUpdater().checkearVersion(csSender);
     }
 }

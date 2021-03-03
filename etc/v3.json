@@ -1,0 +1,15 @@
+{
+    "pluginVersions": {
+        "3.0": "Reescritura del sistema para hacerlo compatible con Spigot, Sponge y BungeeCord"
+    },
+    "minecraftVersions": {
+        "1.8.8": "3.0",
+        "1.12.2": "3.0",
+        "1.13.2": "3.0",
+        "1.14.4": "3.0",
+        "1.15.2": "3.0",
+        "1.16.2": "3.0",
+        "1.16.4": "3.0",
+        "1.16.5": "3.0"
+    }
+}

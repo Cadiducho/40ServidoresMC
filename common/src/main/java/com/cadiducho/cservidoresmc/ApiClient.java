@@ -49,13 +49,13 @@ public class ApiClient {
     }
 
     /**
-     *
-     * @param params
-     * @param method
-     * @param type
-     * @param <T>
-     * @return
-     * @throws IOException
+     * Obtener datos de la API, según unos parámetros dados, y parsearlo a un objeto
+     * @param params Parámetros HTTP de la petición
+     * @param method Método HTTP
+     * @param type Clase a la que convertir los datos recibidos
+     * @param <T> Tipo que retornará
+     * @return El objeto con los datos solicitados a la API
+     * @throws IOException Si falla al parsear o al conectarse a la API
      */
     private <T> T fetchData(String params, String method, Class<T> type) throws IOException {
         URL url = new URL(API_URL + apiKey() + params);

@@ -1,7 +1,8 @@
 package com.cadiducho.cservidoresmc.bukkit;
 
 import com.cadiducho.cservidoresmc.ApiClient;
-import com.cadiducho.cservidoresmc.bukkit.util.Updater;
+import com.cadiducho.cservidoresmc.Updater;
+import com.cadiducho.cservidoresmc.api.CSPlugin;
 import com.google.gson.Gson;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
@@ -19,7 +20,7 @@ import java.util.logging.Level;
  * Implementación para Bukkit, Spigot y Glowstone
  * @author Cadiducho
  */
-public class BukkitPlugin extends JavaPlugin {
+public class BukkitPlugin extends JavaPlugin implements CSPlugin {
 
     @Getter private ApiClient apiClient;
     @Getter private Updater updater;
@@ -63,7 +64,7 @@ public class BukkitPlugin extends JavaPlugin {
          */
         updater = new Updater(this, getPluginVersion(), getServer().getBukkitVersion().split("-")[0]);
         debugLog("Checkeando nuevas versiones...");
-        updater.checkearVersion(null, true);
+        updater.checkearVersion(null);
         log("Plugin 40ServidoresMC v" + getPluginVersion() + " cargado completamente");
     }
 
@@ -123,21 +124,18 @@ public class BukkitPlugin extends JavaPlugin {
         }
         return true;
     }
-    
+
+    @Override
     public boolean isDebug() {
         return this.getConfig().getBoolean("debug");
     }
-    
-    public void debugLog(String s) {
-        if (isDebug()){
-            getLogger().log(Level.INFO, "[Debug] {0}", s);
-        }
-    }
-    
+
+    @Override
     public void log(String s) {
         getLogger().log(Level.INFO, s);
     }
-    
+
+    @Override
     public void log(Level l, String s){
        getLogger().log(l, s);
     }

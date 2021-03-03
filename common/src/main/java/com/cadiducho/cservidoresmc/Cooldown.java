@@ -32,6 +32,15 @@ public class Cooldown {
     }
 
     public boolean isCoolingDown(String player) {
-        return getCooldowns().containsKey(player) && getCooldowns().get(player) >= (System.currentTimeMillis() - (getTime() * 1000));
+        if (getCooldowns().containsKey(player)) {
+            Long cooldownTime = getCooldowns().get(player);
+            if (cooldownTime >= System.currentTimeMillis() - (getTime() * 1000L)) {
+                return true;
+            } else {
+                // Si ya ha cumplido, eliminar del map
+                getCooldowns().remove(player);
+            }
+        }
+        return false;
     }
 }
