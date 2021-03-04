@@ -56,9 +56,9 @@ public class Updater {
                 if (!updaterVersion.equals(versionInstalada)) {
                     String link = String.format("https://github.com/Cadiducho/40ServidoresMC/releases/tag/v%s", updaterVersion);
                     String format = String.format(NEW_VERSION, updaterVersion, updateDescription, link);
-                    finalSender.sendMessage(format);
+                    finalSender.sendMessageWithTag(format);
                 } else {
-                    finalSender.sendMessage(UPDATED);
+                    finalSender.sendMessageWithTag(UPDATED);
                 }
             }
         }).exceptionally(e -> {

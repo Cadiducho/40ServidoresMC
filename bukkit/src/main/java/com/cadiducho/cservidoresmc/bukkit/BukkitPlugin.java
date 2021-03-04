@@ -2,6 +2,9 @@ package com.cadiducho.cservidoresmc.bukkit;
 
 import com.cadiducho.cservidoresmc.ApiClient;
 import com.cadiducho.cservidoresmc.Updater;
+import com.cadiducho.cservidoresmc.api.CSCommandSender;
+import com.cadiducho.cservidoresmc.api.CSConfiguration;
+import com.cadiducho.cservidoresmc.api.CSConsoleSender;
 import com.cadiducho.cservidoresmc.api.CSPlugin;
 import com.google.gson.Gson;
 import lombok.Getter;
@@ -9,11 +12,11 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -25,17 +28,9 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
     @Getter private ApiClient apiClient;
     @Getter private Updater updater;
     
-    private final String tag = "&8[&b40ServidoresMC&8]";
-    private int configVer = 0;
-    private final int configActual = 3;
-    private boolean comandosCustom = true;
-    public List<String> listaComandos;
-    
     private static BukkitPlugin instance;
-    
-    public static BukkitPlugin get() {
-        return instance;
-    }
+    private CSConfiguration csConfiguration;
+    private CSCommandManager commandManager;
     
     @Override
     public void onEnable() {
@@ -47,9 +42,11 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
         /*
          * Generar y cargar Config.yml
          */
-        debugLog("Cargando configuración...");
-        cargarConfig();
+        csConfiguration = new CSBukkitConfig(instance, getDataFolder() + File.separator + "config.yml");
+        csConfiguration.load();
         
+        apiClient = new ApiClient(instance, new Gson());
+
         /*
          * Comandos y eventos
          */
@@ -59,49 +56,14 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
         installPlaceholderAPI();
         
         Metrics metrics = new Metrics(instance, 3909);
+
         /*
          * Finalizar...
          */
-        updater = new Updater(this, getPluginVersion(), getServer().getBukkitVersion().split("-")[0]);
+        updater = new Updater(instance, getPluginVersion(), getServer().getBukkitVersion().split("-")[0]);
         debugLog("Checkeando nuevas versiones...");
         updater.checkearVersion(null);
         log("Plugin 40ServidoresMC v" + getPluginVersion() + " cargado completamente");
-    }
-
-    private void cargarConfig() {
-        File file = new File(getDataFolder() + File.separator + "config.yml");
-        if (!file.exists()) {
-            try {
-                getConfig().options().copyDefaults(true);
-                saveConfig();
-                log("Generando archivo config.yml correctamente");
-            } catch (Exception e) {
-                this.getLogger().info("Fallo al generar el config.yml!");
-                debugLog("Causa: " + e.toString());
-            }
-        }
-        configVer = this.getConfig().getInt("configVer", configVer);
-        if (configVer < configActual) {
-            log(Level.SEVERE, "Tu configuración es de una versión más antigua a la de este plugin!"
-                + "Corrígelo o podrás tener errores..." );
-        }
-        reloadComandosCustom();      
-    }
-    
-    /**
-     * Recargar el array de comandos custom desde la config
-     */
-    public void reloadComandosCustom() {
-        comandosCustom = getConfig().getBoolean("comandosCustom.activado", comandosCustom);
-        
-        if (comandosCustom) {
-            try {
-                listaComandos = getConfig().getStringList("comandosCustom");
-            } catch (NullPointerException e) {
-                log(Level.WARNING, "No se ha podido cargar los premios de comandos customizados! (Error Config)");
-                comandosCustom = false;
-            }    
-        }  
     }
 
     /**
@@ -126,8 +88,8 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
     }
 
     @Override
-    public boolean isDebug() {
-        return this.getConfig().getBoolean("debug");
+    public CSConfiguration getCSConfiguration() {
+        return csConfiguration;
     }
 
     @Override
@@ -140,12 +102,21 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
        getLogger().log(l, s);
     }
     
-    public void sendMessage(String str, CommandSender sender) {
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', tag + " " + str));
+    @Override
+    public String getPluginVersion() {
+        return this.getDescription().getVersion();
     }
     
-    public String getPluginVersion(){
-        return this.getDescription().getVersion();
+    @Override
+    public void dispatchCommand(String command) {
+        getServer().dispatchCommand(getServer().getConsoleSender(), command);
+    }
+
+    @Override
+    public void broadcastMessage(String message) {
+        getServer().getScheduler().runTask(instance, () -> {
+            getServer().getOnlinePlayers().forEach(p -> p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)));
+        });
     }
 
 }

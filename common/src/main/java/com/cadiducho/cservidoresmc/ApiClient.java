@@ -1,8 +1,10 @@
 package com.cadiducho.cservidoresmc;
 
+import com.cadiducho.cservidoresmc.api.CSPlugin;
 import com.cadiducho.cservidoresmc.model.ServerStats;
 import com.cadiducho.cservidoresmc.model.VoteResponse;
 import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,21 +13,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.CompletableFuture;
 
+@RequiredArgsConstructor
 public class ApiClient {
 
     private final String API_URL = "https://40servidoresmc.es/api2.php?clave=";
+    private final CSPlugin plugin;
     private final Gson gson;
 
-    public ApiClient(Gson gson) {
-        this.gson = gson;
-    }
-
     public String apiKey() {
-        return ""; //fixme: config
+        return plugin.getCSConfiguration().getString("clave");
     }
 
     public int timeOut() {
-        return 30000; //fixme: config
+        return plugin.getCSConfiguration().getInt("readTimeOut");
     }
 
     public CompletableFuture<VoteResponse> validateVote(String player) {

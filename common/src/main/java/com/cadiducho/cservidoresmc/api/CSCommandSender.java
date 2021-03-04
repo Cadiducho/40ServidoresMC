@@ -4,6 +4,10 @@ public interface CSCommandSender {
 
     void sendMessage(String string);
 
+    default void sendMessageWithTag(String string) {
+        sendMessage(CSPlugin.TAG + " " + string);
+    }
+
     String getName();
 
     default boolean isConsole() {
@@ -11,5 +15,4 @@ public interface CSCommandSender {
     }
 
     boolean hasPermission(String string);
-
 }
