@@ -43,7 +43,7 @@ public class Updater {
             // Se hace al iniciar el plugin
             sender = new CSConsoleSender(plugin);
         }
-        plugin.debugLog("Buscando nueva versión...");
+        plugin.debugLog("Buscando nueva versión para Minecraft " + versionMinecraft + "...");
 
         final CSCommandSender finalSender = sender;
         fetchUpdate().thenAccept((UpdaterInfo updaterInfo) -> {
@@ -71,7 +71,7 @@ public class Updater {
     private CompletableFuture<UpdaterInfo> fetchUpdate() {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                URL url = new URL("https://github.com/Cadiducho/40ServidoresMC/blob/development/etc/v3.json"); //ToDo: cambiar el branch
+                URL url = new URL("https://raw.githubusercontent.com/Cadiducho/40ServidoresMC/development/etc/v3.json"); //ToDo: cambiar el branch
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 

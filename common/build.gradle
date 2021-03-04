@@ -4,4 +4,12 @@ plugins {
 
 dependencies {
   compileOnly 'com.google.code.gson:gson:2.8.6'
+
+  testImplementation(platform('org.junit:junit-bom:5.7.0'))
+  testImplementation('org.junit.jupiter:junit-jupiter')
+  testImplementation('com.google.code.gson:gson:2.8.6')
+}
+
+test {
+  useJUnitPlatform()
 }
