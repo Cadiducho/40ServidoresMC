@@ -6,6 +6,7 @@ import com.cadiducho.cservidoresmc.api.CSCommandSender;
 import com.cadiducho.cservidoresmc.api.CSConfiguration;
 import com.cadiducho.cservidoresmc.api.CSConsoleSender;
 import com.cadiducho.cservidoresmc.api.CSPlugin;
+import com.cadiducho.cservidoresmc.cmd.CSCommandManager;
 import com.google.gson.Gson;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
@@ -35,23 +36,20 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        debugLog("Modo Debug activado en el plugin");
-
-        apiClient = new ApiClient(new Gson());
 
         /*
          * Generar y cargar Config.yml
          */
         csConfiguration = new CSBukkitConfig(instance, getDataFolder() + File.separator + "config.yml");
         csConfiguration.load();
-        
+
         apiClient = new ApiClient(instance, new Gson());
 
         /*
          * Comandos y eventos
          */
         debugLog("Registrando comandos y eventos...");
-        CommandManager.load();
+        this.commandManager = new CSCommandManager(instance);
 
         installPlaceholderAPI();
         
@@ -76,11 +74,21 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
     }
     
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(CommandSender bukkitSender, Command cmd, String label, String[] args) {
+        if (label.startsWith(("40ServidoresMC:").toLowerCase())) {
+            label = label.substring(("40ServidoresMC:").length());
+        }
+        CSCommandSender csCommandSender;
+        if (bukkitSender instanceof ConsoleCommandSender) {
+            csCommandSender = new CSConsoleSender(instance);
+        } else {
+            csCommandSender = new BukkitCommandSender(bukkitSender);
+        }
+
         try {
-            CommandManager.onCmd(sender, cmd, label, args);
+            commandManager.executeCommand(csCommandSender, label, Arrays.asList(args));
         } catch (Exception ex) {
-            log(Level.SEVERE, "Error al ejecutar el comando '" + label + Arrays.toString(args)+"'");
+            log(Level.SEVERE, "Error al ejecutar el comando '/" + label + Arrays.toString(args)+"'");
             debugLog(ex.getMessage());
             if (ex.getCause() != null) debugLog(ex.getCause().getMessage());
         }
@@ -101,12 +109,12 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
     public void log(Level l, String s){
        getLogger().log(l, s);
     }
-    
+
     @Override
     public String getPluginVersion() {
         return this.getDescription().getVersion();
     }
-    
+
     @Override
     public void dispatchCommand(String command) {
         getServer().dispatchCommand(getServer().getConsoleSender(), command);

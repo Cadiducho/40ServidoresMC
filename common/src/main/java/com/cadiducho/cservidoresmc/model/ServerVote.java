@@ -1,10 +1,13 @@
 package com.cadiducho.cservidoresmc.model;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
 public class ServerVote {
-    @SerializedName("nombre") private String name;
-    @SerializedName("premiado") private boolean rewarded;
+    @Getter @SerializedName("usuario") private String name;
+    @SerializedName("recompensado") private int recompensado;
+
+    public boolean isRewarded() {
+        return recompensado != 0;
+    }
 }
