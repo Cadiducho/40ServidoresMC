@@ -10,7 +10,7 @@ public interface CSPlugin {
     String TAG = "&8[&b40ServidoresMC&8]";
 
     void log(String text);
-    void log(Level level, String text);
+    void logError(String text);
 
     default boolean isDebug() {
         return getCSConfiguration().getBoolean("debug");
@@ -18,9 +18,14 @@ public interface CSPlugin {
 
     default void debugLog(String s) {
         if (isDebug()){
-            log(Level.INFO, "[Debug] " + s);
+            log("[Debug] " + s);
         }
     }
+
+    /**
+     * Registrar los comandos en la plataforma deseada
+     */
+    void registerCommands();
 
     /**
      * Datos de configuración del plugin, con implementación para cada tipo de servidor

@@ -65,7 +65,7 @@ public class VoteCMD extends CSCommand {
             }
         }).exceptionally(e -> {
             sender.sendMessageWithTag("&cHa ocurrido una excepción. Avisa a un administrador");
-            plugin.log(Level.SEVERE, "Excepción intentando votar: " + e.getMessage());
+            plugin.logError("Excepción intentando votar: " + e.getMessage());
             return null;
         });
 

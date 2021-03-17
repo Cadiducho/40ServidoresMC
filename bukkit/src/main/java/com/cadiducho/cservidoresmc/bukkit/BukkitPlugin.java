@@ -49,7 +49,7 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
          * Comandos y eventos
          */
         debugLog("Registrando comandos y eventos...");
-        this.commandManager = new CSCommandManager(instance);
+        registerCommands();
 
         installPlaceholderAPI();
         
@@ -62,6 +62,11 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
         debugLog("Checkeando nuevas versiones...");
         updater.checkearVersion(null);
         log("Plugin 40ServidoresMC v" + getPluginVersion() + " cargado completamente");
+    }
+
+    @Override
+    public void registerCommands() {
+        this.commandManager = new CSCommandManager(instance);
     }
 
     /**
@@ -88,7 +93,7 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
         try {
             commandManager.executeCommand(csCommandSender, label, Arrays.asList(args));
         } catch (Exception ex) {
-            log(Level.SEVERE, "Error al ejecutar el comando '/" + label + Arrays.toString(args)+"'");
+            logError("Error al ejecutar el comando '/" + label + Arrays.toString(args)+"'");
             debugLog(ex.getMessage());
             if (ex.getCause() != null) debugLog(ex.getCause().getMessage());
         }
@@ -106,8 +111,8 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
     }
 
     @Override
-    public void log(Level l, String s){
-       getLogger().log(l, s);
+    public void logError(String s){
+       getLogger().log(Level.SEVERE, s);
     }
 
     @Override

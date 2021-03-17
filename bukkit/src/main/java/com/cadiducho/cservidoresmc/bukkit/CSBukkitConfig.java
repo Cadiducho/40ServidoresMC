@@ -37,7 +37,7 @@ public class CSBukkitConfig implements CSConfiguration {
 
         int configVer = getInt("configVer");
         if (configVer < configActual) {
-            bukkitPlugin.log(Level.SEVERE, "Tu configuración es de una versión más antigua a la de este plugin!"
+            bukkitPlugin.logError("Tu configuración es de una versión más antigua a la de este plugin!"
                     + "Corrígelo o podrás tener errores..." );
         }
     }
@@ -58,7 +58,7 @@ public class CSBukkitConfig implements CSConfiguration {
             try {
                 listaComandos = getStringList("comandosCustom");
             } catch (NullPointerException e) {
-                bukkitPlugin.log(Level.WARNING, "No se ha podido cargar los premios de comandos customizados! (Error Config)");
+                bukkitPlugin.logError("No se ha podido cargar los premios de comandos customizados! (Error Config)");
                 comandosCustom = false;
             }
         }

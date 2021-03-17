@@ -44,7 +44,7 @@ public class StatsCMD extends CSCommand {
             }
         }).exceptionally(ex -> {
             sender.sendMessageWithTag("&cHa ocurrido una excepción. Revisa la consola o avisa a un administrador");
-            plugin.log(Level.SEVERE, "Excepción obteniendo estadisticas: " + ex.getMessage());
+            plugin.logError("Excepción obteniendo estadisticas: " + ex.getMessage());
             return null;
         });
         return CommandResult.SUCCESS;
