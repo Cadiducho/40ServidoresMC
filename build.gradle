@@ -4,7 +4,9 @@ subprojects {
     group = 'com.cadiducho'
     version = '3.0'
     description = '40ServidoresMC'
-    java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'

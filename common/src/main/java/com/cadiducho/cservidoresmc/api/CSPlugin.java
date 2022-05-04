@@ -2,8 +2,7 @@ package com.cadiducho.cservidoresmc.api;
 
 import com.cadiducho.cservidoresmc.ApiClient;
 import com.cadiducho.cservidoresmc.Updater;
-
-import java.util.logging.Level;
+import com.cadiducho.cservidoresmc.config.CSConfiguration;
 
 public interface CSPlugin {
 
@@ -32,6 +31,17 @@ public interface CSPlugin {
      * @return config
      */
     CSConfiguration getCSConfiguration();
+
+    /**
+     * Comprobar si la configuración tiene una clave válida
+     */
+    default void checkDefaultKey() {
+        if (getCSConfiguration().getString("clave", "key").equalsIgnoreCase("key")) {
+            logError("¡Atención! La clave del servidor no está correctamente configurada");
+            logError("Accede a la configuración y modifica 'clave' con el valor correcto obtenido en la página web.");
+            log("Este error hará que el plugin no funcione correctamente.");
+        }
+    }
 
     /**
      * Instancia del cliente HTTP para la API

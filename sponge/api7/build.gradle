@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "7.1.0"
+    id "io.freefair.lombok" version "6.4.3"
+}
+
+repositories {
+    maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
+}
+
+dependencies {
+    implementation project(':common')
+    implementation 'org.spongepowered:spongeapi:7.4.0'
+    implementation 'org.bstats:bstats-sponge:2.2.1'
+}
+
+shadowJar {
+    archiveBaseName.set(rootProject.name)
+    archiveClassifier.set('Sponge-API7')
+    archiveVersion.set(version)
+
+    relocate 'org.bstats', 'com.cadiducho.cservidoresmc.lib.bstats'
+}
+
+artifacts {
+    archives shadowJar
+}

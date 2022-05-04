@@ -1,7 +1,6 @@
 package com.cadiducho.cservidoresmc.bukkit;
 
 import com.cadiducho.cservidoresmc.api.CSCommandSender;
-import com.cadiducho.cservidoresmc.api.CSPlugin;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

@@ -7,7 +7,6 @@ import com.cadiducho.cservidoresmc.model.ServerVote;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * Comando para obtener las estadísticas de tu servidor en 40ServidoresMC

@@ -3,10 +3,10 @@ package com.cadiducho.cservidoresmc.bukkit;
 import com.cadiducho.cservidoresmc.ApiClient;
 import com.cadiducho.cservidoresmc.Updater;
 import com.cadiducho.cservidoresmc.api.CSCommandSender;
-import com.cadiducho.cservidoresmc.api.CSConfiguration;
 import com.cadiducho.cservidoresmc.api.CSConsoleSender;
 import com.cadiducho.cservidoresmc.api.CSPlugin;
 import com.cadiducho.cservidoresmc.cmd.CSCommandManager;
+import com.cadiducho.cservidoresmc.config.CSConfiguration;
 import com.google.gson.Gson;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
@@ -30,6 +30,7 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
     @Getter private Updater updater;
     
     private static BukkitPlugin instance;
+
     private CSConfiguration csConfiguration;
     private CSCommandManager commandManager;
     
@@ -40,8 +41,7 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
         /*
          * Generar y cargar Config.yml
          */
-        csConfiguration = new CSBukkitConfig(instance, getDataFolder() + File.separator + "config.yml");
-        csConfiguration.load();
+        csConfiguration = new BukkitConfigurationAdapter(instance, new File(getDataFolder() + File.separator + "config.yml"));
 
         apiClient = new ApiClient(instance, new Gson());
 
@@ -62,6 +62,8 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
         debugLog("Checkeando nuevas versiones...");
         updater.checkearVersion(null);
         log("Plugin 40ServidoresMC v" + getPluginVersion() + " cargado completamente");
+
+        checkDefaultKey();
     }
 
     @Override
@@ -102,7 +104,7 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
 
     @Override
     public CSConfiguration getCSConfiguration() {
-        return csConfiguration;
+        return this.csConfiguration;
     }
 
     @Override
@@ -122,7 +124,7 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
 
     @Override
     public void dispatchCommand(String command) {
-        getServer().dispatchCommand(getServer().getConsoleSender(), command);
+        getServer().getScheduler().callSyncMethod(instance, () -> getServer().dispatchCommand(getServer().getConsoleSender(), command));
     }
 
     @Override

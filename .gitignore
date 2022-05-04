@@ -6,5 +6,7 @@
 /bukkit/build
 /common/build
 /sponge/build
+/sponge/api7/build
+/sponge/api8/build
 /bungee/build
-
+/bungee/build
