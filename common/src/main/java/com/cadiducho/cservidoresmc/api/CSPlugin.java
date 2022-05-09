@@ -33,8 +33,8 @@ public interface CSPlugin {
     CSConfiguration getCSConfiguration();
 
     /**
-     *
-     * @return
+     * Obtener la versión de la configuración
+     * @return la versión de la configuración
      */
     default int configVersion() {
         return 3;

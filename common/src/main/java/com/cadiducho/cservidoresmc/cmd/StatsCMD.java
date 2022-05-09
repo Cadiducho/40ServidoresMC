@@ -15,7 +15,9 @@ import java.util.List;
 public class StatsCMD extends CSCommand {
 
     protected StatsCMD() {
-        super("stats40", "40servidores.stats", Collections.emptyList());
+        super("stats40", "40servidores.stats", Collections.emptyList(),
+                "Comprueba las estadísticas de voto",
+                "Usa /stats40 para obtener las estadísticas de voto");
     }
 
     @Override

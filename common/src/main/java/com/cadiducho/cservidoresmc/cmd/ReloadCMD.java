@@ -13,7 +13,10 @@ import java.util.List;
 public class ReloadCMD extends CSCommand {
 
     protected ReloadCMD() {
-        super("reload40", "40servidores.recargar", Arrays.asList("recargar40", "config40"));
+        super("reload40", "40servidores.recargar", Arrays.asList("recargar40", "config40"),
+                "Recargar la configuración del plugin",
+                "Usa /reload40 para recargar la configuración"
+        );
     }
 
     @Override

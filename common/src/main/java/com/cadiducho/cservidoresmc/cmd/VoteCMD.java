@@ -15,7 +15,9 @@ import java.util.List;
 public class VoteCMD extends CSCommand {
 
     protected VoteCMD() {
-        super("voto40", "40servidores.voto", Arrays.asList("votar40", "vote40", "mivoto40"));
+        super("voto40", "40servidores.voto", Arrays.asList("votar40", "vote40", "mivoto40"),
+                "Valida tu voto en el servidor",
+                "Usa /voto40 àra validar tu voto en el servidor");
     }
 
     final Cooldown cooldown = new Cooldown(60);

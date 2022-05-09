@@ -13,7 +13,9 @@ import java.util.List;
 public class TestCMD extends CSCommand {
 
     protected TestCMD() {
-        super("test40", "40servidores.test", Collections.emptyList());
+        super("test40", "40servidores.test", Collections.emptyList(),
+                "Realiza una prueba de premios al votar",
+                "Usa /test40 para probar tus premios al votar");
     }
 
     @Override

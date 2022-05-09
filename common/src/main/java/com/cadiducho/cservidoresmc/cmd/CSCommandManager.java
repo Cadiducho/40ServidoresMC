@@ -4,19 +4,18 @@ import com.cadiducho.cservidoresmc.api.CSCommandSender;
 import com.cadiducho.cservidoresmc.api.CSPlugin;
 import lombok.Getter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class CSCommandManager {
 
     @Getter private final CSPlugin plugin;
     private final Map<String, CSCommand> commands;
+    private final List<CSCommand> commandList;
 
     public CSCommandManager(CSPlugin plugin) {
         this.plugin = plugin;
         this.commands = new HashMap<>();
+        this.commandList = new ArrayList<>();
 
         registerCommand(new ReloadCMD());
         registerCommand(new StatsCMD());
@@ -25,11 +24,16 @@ public class CSCommandManager {
         registerCommand(new VoteCMD());
     }
 
+    public List<CSCommand> getCommands() {
+        return this.commandList;
+    }
+
     /**
      * Registrar un nuevo comando, probablemente específico por cada plataforma, a este manager
      * @param command El comando a registrar
      */
     public void registerCommand(CSCommand command) {
+        this.commandList.add(command);
         this.commands.put(command.getName(), command);
         command.getAliases().forEach(alias -> this.commands.put(alias, command));
     }
@@ -65,6 +69,4 @@ public class CSCommandManager {
             }
         }
     }
-
-    //ToDo: TabCompletition
 }

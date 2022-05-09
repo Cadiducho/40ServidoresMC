@@ -12,7 +12,9 @@ import java.util.List;
 public class UpdateCMD extends CSCommand {
 
     protected UpdateCMD() {
-        super("update40", "40servidores.actualizar", Arrays.asList("actualizar40", "upd40"));
+        super("update40", "40servidores.actualizar", Arrays.asList("actualizar40", "upd40"),
+                "Comprueba si hay actualizaciones del plugin",
+                "Usa /update40 para comprobar si hay actualizaciones");
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.cadiducho.cservidoresmc;
 
 import com.cadiducho.cservidoresmc.api.CSConsoleSender;
 import com.cadiducho.cservidoresmc.api.CSPlugin;
-import com.cadiducho.cservidoresmc.cmd.CSCommandManager;
+import com.cadiducho.cservidoresmc.cmd.*;
 import com.cadiducho.cservidoresmc.config.CSConfiguration;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -10,17 +10,23 @@ import org.bstats.sponge.Metrics;
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.command.CommandManager;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameLoadCompleteEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.serializer.TextSerializers;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Plugin(id = "cservidoresmc", name = "40ServidoresMC", version = SpongePlugin.PLUGIN_VERSION)
 public class SpongePlugin implements CSPlugin {
@@ -50,6 +56,8 @@ public class SpongePlugin implements CSPlugin {
     @Listener
     public void onServerLoad(GameLoadCompleteEvent event) {
         this.csConfiguration = new SpongeConfigAdapter(this, resolveConfig());
+
+        registerCommands();
     }
 
     @Listener
@@ -80,6 +88,12 @@ public class SpongePlugin implements CSPlugin {
     @Override
     public void registerCommands() {
         this.csCommandManager = new CSCommandManager(this);
+        CommandManager cmdService = Sponge.getCommandManager();
+        this.csCommandManager.getCommands().forEach(cmd -> {
+            List<String> alias = new ArrayList<>(cmd.getAliases());
+            alias.add(cmd.getName());
+            cmdService.register(this, new SpongeCommandExecutor(csCommandManager, cmd), alias);
+        });
     }
 
     @Override
@@ -119,6 +133,6 @@ public class SpongePlugin implements CSPlugin {
 
     @Override
     public void broadcastMessage(String message) {
-        Sponge.getServer().getBroadcastChannel().send(Text.of(message));
+        Sponge.getServer().getBroadcastChannel().send(TextSerializers.FORMATTING_CODE.deserialize(message));
     }
 }
