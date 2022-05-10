@@ -41,7 +41,7 @@ public class VoteCMD extends CSCommand {
 
             switch (status) {
                 case NOT_VOTED:
-                    sender.sendMessageWithTag("&6No has votado hoy! Puedes hacerlo en &a" + web);
+                    sender.sendNotVotedTodayLink("&6No has votado hoy! Puedes hacerlo en &a ", web);
                     break;
                 case SUCCESS:
                     sender.sendMessageWithTag(plugin.getCSConfiguration().getString("mensaje"));

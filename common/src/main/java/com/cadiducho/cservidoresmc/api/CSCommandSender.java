@@ -8,6 +8,10 @@ public interface CSCommandSender {
         sendMessage(CSPlugin.TAG + " " + string);
     }
 
+    default void sendNotVotedTodayLink(String message, String web) {
+        sendMessageWithTag(message + web);
+    }
+
     String getName();
 
     default boolean isConsole() {

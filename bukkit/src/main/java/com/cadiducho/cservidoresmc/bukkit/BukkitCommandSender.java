@@ -2,7 +2,7 @@ package com.cadiducho.cservidoresmc.bukkit;
 
 import com.cadiducho.cservidoresmc.api.CSCommandSender;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 
 @RequiredArgsConstructor
@@ -12,7 +12,7 @@ public class BukkitCommandSender implements CSCommandSender {
 
     @Override
     public void sendMessage(String string) {
-        commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', string));
+        commandSender.spigot().sendMessage(TextComponent.fromLegacyText(toString()));
     }
 
     @Override
