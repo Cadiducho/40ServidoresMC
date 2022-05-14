@@ -1,13 +1,11 @@
 package com.cadiducho.cservidoresmc;
 
 import com.cadiducho.cservidoresmc.api.CSCommandSender;
+import com.cadiducho.cservidoresmc.api.CSPlugin;
 import lombok.RequiredArgsConstructor;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.action.ClickAction;
-import org.spongepowered.api.text.action.TextAction;
 import org.spongepowered.api.text.action.TextActions;
-import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
@@ -18,6 +16,13 @@ import java.net.URL;
 public class SpongeCommandSender implements CSCommandSender {
 
     private final CommandSource commandSource;
+
+    private final CSPlugin plugin;
+    
+    @Override
+    public String TAG() {
+        return plugin.getCSConfiguration().getTag();
+    }
 
     @Override
     public void sendMessage(String string) {

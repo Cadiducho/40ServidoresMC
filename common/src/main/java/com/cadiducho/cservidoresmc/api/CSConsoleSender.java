@@ -8,6 +8,11 @@ public class CSConsoleSender implements CSCommandSender {
     private final CSPlugin plugin;
 
     @Override
+    public String TAG() {
+        return "";
+    }
+
+    @Override
     public void sendMessage(String string) {
         plugin.log(string);
     }

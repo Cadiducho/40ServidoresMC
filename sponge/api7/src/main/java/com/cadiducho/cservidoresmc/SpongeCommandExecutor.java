@@ -33,7 +33,7 @@ public class SpongeCommandExecutor implements CommandCallable {
         if (source instanceof ConsoleSource || source instanceof CommandBlockSource) {
             csCommandSender = new CSConsoleSender(commandManager.getPlugin());
         } else {
-            csCommandSender = new SpongeCommandSender(source);
+            csCommandSender = new SpongeCommandSender(source, commandManager.getPlugin());
         }
         commandManager.executeCommand(csCommandSender, command.getName(), Arrays.asList(args.split(" ")));
         return CommandResult.success();
@@ -41,7 +41,7 @@ public class SpongeCommandExecutor implements CommandCallable {
 
     @Override
     public List<String> getSuggestions(CommandSource source, String args, Location<World> location) {
-        CSCommandSender sender = new SpongeCommandSender(source);
+        CSCommandSender sender = new SpongeCommandSender(source, commandManager.getPlugin());
         return command.tabCompleteCommand(sender, Arrays.asList(args.split(" ")));
     }
 

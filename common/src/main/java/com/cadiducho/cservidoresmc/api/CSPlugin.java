@@ -6,8 +6,6 @@ import com.cadiducho.cservidoresmc.config.CSConfiguration;
 
 public interface CSPlugin {
 
-    String TAG = "&8[&b40ServidoresMC&8]";
-
     void log(String text);
     void logError(String text);
 

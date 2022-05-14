@@ -2,10 +2,12 @@ package com.cadiducho.cservidoresmc.api;
 
 public interface CSCommandSender {
 
+    String TAG();
+
     void sendMessage(String string);
 
     default void sendMessageWithTag(String string) {
-        sendMessage(CSPlugin.TAG + " " + string);
+        sendMessage(TAG() + " " + string);
     }
 
     default void sendNotVotedTodayLink(String message, String web) {

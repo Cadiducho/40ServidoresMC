@@ -89,7 +89,7 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
         if (bukkitSender instanceof ConsoleCommandSender) {
             csCommandSender = new CSConsoleSender(instance);
         } else {
-            csCommandSender = new BukkitCommandSender(bukkitSender);
+            csCommandSender = new BukkitCommandSender(bukkitSender, this);
         }
 
         try {

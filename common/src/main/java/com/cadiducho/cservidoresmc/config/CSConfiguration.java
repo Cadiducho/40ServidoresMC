@@ -18,6 +18,10 @@ public interface CSConfiguration {
         return getStringList("comandosCustom");
     }
 
+    default String getTag() {
+        return getString("tag", "&8[&b40ServidoresMC&8]");
+    }
+
     String getString(String key, String defValue);
 
     default String getString(String key) {
