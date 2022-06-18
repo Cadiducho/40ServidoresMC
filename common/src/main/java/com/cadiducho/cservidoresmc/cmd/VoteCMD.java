@@ -52,6 +52,9 @@ public class VoteCMD extends CSCommand {
                     if (plugin.getCSConfiguration().getBoolean("broadcast.activado")) {
                         plugin.broadcastMessage(plugin.getCSConfiguration().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName()));
                     }
+
+                    plugin.dispatchEvent(sender);
+                    
                     break;
                 case ALREADY_VOTED:
                     sender.sendMessageWithTag("&aGracias por votar, pero ya has obtenido tu premio!");

@@ -4,6 +4,7 @@ import com.cadiducho.cservidoresmc.api.CSConfiguration;
 import com.cadiducho.cservidoresmc.api.CSConsoleSender;
 import com.cadiducho.cservidoresmc.api.CSPlugin;
 import com.cadiducho.cservidoresmc.cmd.CSCommandManager;
+import com.cadiducho.cservidoresmc.api.CSCommandSender;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import org.bstats.sponge.Metrics;
@@ -83,6 +84,11 @@ public class SpongePlugin implements CSPlugin {
     @Override
     public void dispatchCommand(String command) {
         Sponge.getCommandManager().process(Sponge.getServer().getConsole(), command);
+    }
+
+    @Override
+    public void dispatchEvent(CSCommandSender sender) {
+        // No hay evento para Sponge
     }
 
     @Override

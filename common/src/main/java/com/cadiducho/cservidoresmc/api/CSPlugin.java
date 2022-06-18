@@ -3,6 +3,8 @@ package com.cadiducho.cservidoresmc.api;
 import com.cadiducho.cservidoresmc.ApiClient;
 import com.cadiducho.cservidoresmc.Updater;
 
+import com.cadiducho.cservidoresmc.api.CSCommandSender;
+
 import java.util.logging.Level;
 
 public interface CSPlugin {
@@ -62,4 +64,10 @@ public interface CSPlugin {
      * @param message el mensaje
      */
     void broadcastMessage(String message);
+
+    /**
+     * Ejecutar evento para el ejecutor del comando
+     * @param command El comando deseado
+     */
+    void dispatchEvent(CSCommandSender sender);
 }
