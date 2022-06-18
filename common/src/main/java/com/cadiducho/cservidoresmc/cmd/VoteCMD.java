@@ -66,6 +66,19 @@ public class VoteCMD extends CSCommand {
                     sender.sendMessageWithTag("&7Ha ocurrido un error. Prueba más tarde o avisa a un adminsitrador");
                     break;
             }
+
+            sender.sendMessageWithTag(plugin.getCSConfiguration().getString("mensaje"));
+
+            plugin.getCSConfiguration().customCommandsList().stream()
+                    .map(cmds -> cmds.replace("{0}", sender.getName()))
+                    .forEach(plugin::dispatchCommand);
+
+            if (plugin.getCSConfiguration().getBoolean("broadcast.activado")) {
+                plugin.broadcastMessage(plugin.getCSConfiguration().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName()));
+            }
+
+            plugin.dispatchEvent(sender);
+            
         }).exceptionally(e -> {
             sender.sendMessageWithTag("&cHa ocurrido una excepción. Avisa a un administrador");
             plugin.logError("Excepción intentando votar: " + e.getMessage());

@@ -10,6 +10,7 @@ import com.cadiducho.cservidoresmc.cmd.CSCommandManager;
 import com.google.gson.Gson;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -125,7 +126,11 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
 
     @Override
     public void dispatchCommand(String command) {
-        getServer().dispatchCommand(getServer().getConsoleSender(), command);
+        try {
+            Bukkit.getScheduler().callSyncMethod( this, () -> Bukkit.dispatchCommand( getServer().getConsoleSender(), command ) ).get();
+        } catch(Exception ex) {
+            System.out.println(ex);
+        }
     }
 
     @Override
