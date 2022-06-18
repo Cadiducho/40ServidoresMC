@@ -21,6 +21,10 @@ public class BukkitCommandSender implements CSCommandSender {
         return commandSender.getName();
     }
 
+    public CommandSender getSender() {
+        return commandSender;
+    }
+
     @Override
     public boolean hasPermission(String string) {
         return commandSender.hasPermission(string);

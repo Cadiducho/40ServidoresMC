@@ -52,7 +52,7 @@ public class CSBukkitConfig implements CSConfiguration {
      * Recargar el array de comandos custom desde la config
      */
     private void reloadCustomCommands() {
-        comandosCustom = bukkitPlugin.getConfig().getBoolean("comandosCustom.activado", comandosCustom);
+        comandosCustom = bukkitPlugin.getConfig().getBoolean("broadcast.activado", comandosCustom);
 
         if (comandosCustom) {
             try {

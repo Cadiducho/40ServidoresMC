@@ -7,6 +7,9 @@ import com.cadiducho.cservidoresmc.api.CSConfiguration;
 import com.cadiducho.cservidoresmc.api.CSConsoleSender;
 import com.cadiducho.cservidoresmc.api.CSPlugin;
 import com.cadiducho.cservidoresmc.cmd.CSCommandManager;
+
+import com.cadiducho.cservidoresmc.bukkit.BukkitCommandSender;
+
 import com.google.gson.Gson;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
@@ -126,6 +129,7 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
 
     @Override
     public void dispatchCommand(String command) {
+        System.out.println("DESPACHO "+command);
         try {
             Bukkit.getScheduler().callSyncMethod( this, () -> Bukkit.dispatchCommand( getServer().getConsoleSender(), command ) ).get();
         } catch(Exception ex) {
@@ -135,8 +139,13 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
 
     @Override
     public void dispatchEvent(CSCommandSender sender) {
-        Vote40Event event = new Vote40Event((Player)sender);
-        getServer().getPluginManager().callEvent(event);
+        BukkitCommandSender bsender = (BukkitCommandSender)sender;
+        Vote40Event event = new Vote40Event((Player)bsender.getSender());
+        try {
+            Bukkit.getScheduler().runTask(this, () -> Bukkit.getPluginManager().callEvent(event));
+        } catch(Exception ex) {
+            System.out.println(ex);
+        }
     }
 
     @Override
