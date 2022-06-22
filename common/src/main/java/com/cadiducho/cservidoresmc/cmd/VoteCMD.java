@@ -43,18 +43,19 @@ public class VoteCMD extends CSCommand {
                     sender.sendMessageWithTag("&6No has votado hoy! Puedes hacerlo en &a" + web);
                     break;
                 case SUCCESS:
-                    sender.sendMessageWithTag(plugin.getCSConfiguration().getString("mensaje"));
+                    if( plugin.dispatchEvent(sender) ) {
+                        sender.sendMessageWithTag(plugin.getCSConfiguration().getString("mensaje"));
 
-                    plugin.getCSConfiguration().customCommandsList().stream()
-                    .map(cmds -> cmds.replace("{0}", sender.getName()))
-                    .forEach(cmd -> plugin.dispatchCommand(cmd));
+                        plugin.getCSConfiguration().customCommandsList().stream()
+                        .map(cmds -> cmds.replace("{0}", sender.getName()))
+                        .forEach(plugin::dispatchCommand);
 
-                    if (plugin.getCSConfiguration().getBoolean("broadcast.activado")) {
-                        plugin.broadcastMessage(plugin.getCSConfiguration().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName()));
+                        if (plugin.getCSConfiguration().getBoolean("broadcast.activado")) {
+                            plugin.broadcastMessage(plugin.getCSConfiguration().getString("broadcast.mensajeBroadcast").replace("{0}", sender.getName()));
+                        }                        
+                    } else {
+                        sender.sendMessageWithTag("&cSe ha cancelado!");
                     }
-
-                    plugin.dispatchEvent(sender);
-                    
                     break;
                 case ALREADY_VOTED:
                     sender.sendMessageWithTag("&aGracias por votar, pero ya has obtenido tu premio!");

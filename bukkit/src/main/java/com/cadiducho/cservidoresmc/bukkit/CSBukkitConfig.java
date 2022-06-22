@@ -40,8 +40,6 @@ public class CSBukkitConfig implements CSConfiguration {
             bukkitPlugin.logError("Tu configuración es de una versión más antigua a la de este plugin!"
                     + "Corrígelo o podrás tener errores..." );
         }
-
-        reloadCustomCommands();
     }
 
     @Override
@@ -54,7 +52,7 @@ public class CSBukkitConfig implements CSConfiguration {
      * Recargar el array de comandos custom desde la config
      */
     private void reloadCustomCommands() {
-        comandosCustom = bukkitPlugin.getConfig().getBoolean("broadcast.activado");
+        comandosCustom = bukkitPlugin.getConfig().getBoolean("comandosCustom.activado", comandosCustom);
         if (comandosCustom) {
             try {
                 listaComandos = getStringList("comandosCustom");

@@ -87,8 +87,9 @@ public class SpongePlugin implements CSPlugin {
     }
 
     @Override
-    public void dispatchEvent(CSCommandSender sender) {
+    public boolean dispatchEvent(CSCommandSender sender) {
         // No hay evento para Sponge
+        return true;
     }
 
     @Override

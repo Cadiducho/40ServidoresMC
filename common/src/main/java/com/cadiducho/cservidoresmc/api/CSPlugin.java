@@ -69,5 +69,5 @@ public interface CSPlugin {
      * Ejecutar evento para el ejecutor del comando
      * @param command El comando deseado
      */
-    void dispatchEvent(CSCommandSender sender);
+    boolean dispatchEvent(CSCommandSender sender);
 }

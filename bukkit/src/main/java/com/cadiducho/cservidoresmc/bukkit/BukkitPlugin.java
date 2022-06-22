@@ -129,30 +129,20 @@ public class BukkitPlugin extends JavaPlugin implements CSPlugin {
 
     @Override
     public void dispatchCommand(String command) {
-        System.out.println("DESPACHO "+command);
-        try {
-            Bukkit.getScheduler().callSyncMethod( this, () -> Bukkit.dispatchCommand( getServer().getConsoleSender(), command ) ).get();
-        } catch(Exception ex) {
-            System.out.println(ex);
-        }
+        getServer().dispatchCommand( getServer().getConsoleSender(), command );
     }
 
     @Override
-    public void dispatchEvent(CSCommandSender sender) {
+    public boolean dispatchEvent(CSCommandSender sender) {
         BukkitCommandSender bsender = (BukkitCommandSender)sender;
         Vote40Event event = new Vote40Event((Player)bsender.getSender());
-        try {
-            Bukkit.getScheduler().runTask(this, () -> Bukkit.getPluginManager().callEvent(event));
-        } catch(Exception ex) {
-            System.out.println(ex);
-        }
+        getServer().getPluginManager().callEvent(event);
+        return !event.isCancelled();
     }
 
     @Override
     public void broadcastMessage(String message) {
-        getServer().getScheduler().runTask(instance, () -> {
-            getServer().getOnlinePlayers().forEach(p -> p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)));
-        });
+        getServer().getOnlinePlayers().forEach(p -> p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)));
     }
 
 }
