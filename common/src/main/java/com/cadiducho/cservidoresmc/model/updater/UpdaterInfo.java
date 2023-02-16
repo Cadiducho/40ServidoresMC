@@ -1,12 +1,14 @@
 package com.cadiducho.cservidoresmc.model.updater;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @Getter
+@ToString
 public class UpdaterInfo {
 
     private HashMap<String, String> minecraftVersions;

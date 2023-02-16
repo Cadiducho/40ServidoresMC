@@ -19,7 +19,7 @@ public class UpdateCMD extends CSCommand {
 
     @Override
     public CommandResult execute(CSPlugin plugin, CSCommandSender sender, String label, List<String> args) {
-        plugin.getUpdater().checkearVersion(sender);
+        plugin.getUpdater().checkearVersion(sender, true);
         return CommandResult.SUCCESS;
     }
 }

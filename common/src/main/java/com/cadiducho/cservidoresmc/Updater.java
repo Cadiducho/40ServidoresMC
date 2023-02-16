@@ -39,6 +39,15 @@ public class Updater {
      * @param sender Jugador al que se avisará
      */
     public void checkearVersion(CSCommandSender sender) {
+        checkearVersion(sender, false);
+    }
+
+    /**
+     * Comprobar si hay nueva versión
+     * @param sender Jugador al que se avisará
+     * @param confirmation Si es true, se avisará si no hay nueva versión
+     */
+    public void checkearVersion(CSCommandSender sender, boolean confirmation) {
         if (sender == null) {
             // Se hace al iniciar el plugin
             sender = new CSConsoleSender(plugin);
@@ -60,6 +69,8 @@ public class Updater {
                 } else {
                     finalSender.sendMessageWithTag(UPDATED);
                 }
+            } else if (confirmation) {
+                finalSender.sendMessageWithTag("No hay versión más moderna recomendada para tu versión de Minecraft.");
             }
         }).exceptionally(e -> {
             plugin.log(ERROR);

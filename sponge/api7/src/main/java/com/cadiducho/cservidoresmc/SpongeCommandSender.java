@@ -18,15 +18,15 @@ public class SpongeCommandSender implements CSCommandSender {
     private final CommandSource commandSource;
 
     private final CSPlugin plugin;
-    
+
     @Override
     public String TAG() {
         return plugin.getCSConfiguration().getTag();
     }
 
     @Override
-    public void sendMessage(String string) {
-        commandSource.sendMessage(TextSerializers.FORMATTING_CODE.deserialize(string));
+    public void sendMessage(String message) {
+        commandSource.sendMessage(TextSerializers.FORMATTING_CODE.deserialize(message));
     }
 
     @Override
@@ -44,7 +44,7 @@ public class SpongeCommandSender implements CSCommandSender {
     }
 
     @Override
-    public boolean hasPermission(String string) {
-        return commandSource.hasPermission(string);
+    public boolean hasPermission(String permission) {
+        return commandSource.hasPermission(permission);
     }
 }

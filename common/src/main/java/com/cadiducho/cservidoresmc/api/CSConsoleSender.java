@@ -13,8 +13,8 @@ public class CSConsoleSender implements CSCommandSender {
     }
 
     @Override
-    public void sendMessage(String string) {
-        plugin.log(string);
+    public void sendMessage(String message) {
+        plugin.log(message);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class CSConsoleSender implements CSCommandSender {
     }
 
     @Override
-    public boolean hasPermission(String string) {
+    public boolean hasPermission(String permission) {
         return true;
     }
 
